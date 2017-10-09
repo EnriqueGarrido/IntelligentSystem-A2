@@ -17,11 +17,6 @@ public class Action {
 	public void perform(Field field) {
 		//Comprobar q la cantidad en sandMovement en una posicion es mayor que 0 y si lo es entonces sumar la arena en field en la direccion
 		//que sea y restarselo a la posicion actual
-		/*for(int i=1; i<sandMovement.length; i++) {
-			if(computePosition())
-		}*/
-			
-			////////////////////////////////////////////////////////////////////////////
 		if(sandMovement[1]!=0) {//Al norte
 			field.setNumber(field.getXt()-1, field.getYt(), field.getNumber(field.getXt()-1, field.getYt())+sandMovement[1]);
 			field.setNumber(field.getXt(), field.getYt(), field.getNumber(field.getXt(), field.getYt())-sandMovement[1]);
@@ -41,10 +36,6 @@ public class Action {
 		
 		field.setXt(xt);
 		field.setYt(yt);
-	}
-	
-	private void computePosition() {
-		
 	}
 	
 }

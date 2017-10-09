@@ -142,9 +142,9 @@ public class mainClass {
 		auxDistribution = distribution.clone();
 		solution.add(distribution.clone());
 		if(position < distribution.length) {
-			nextPos = nextPosAvailable(position, distribution, field);
+			//nextPos = nextPosAvailable(position, distribution, field);
 			for(int j=distribution[position]; j>0; j--) {	
-				//nextPos = nextPosAvailable(position, distribution, field);
+				nextPos = nextPosAvailable(position, distribution, field);
 				if(nextPos < distribution.length ) {//&& roomForSand(nextPos, distribution, field)) {
 					auxDistribution[position]--;
 					auxDistribution[nextPos]++;

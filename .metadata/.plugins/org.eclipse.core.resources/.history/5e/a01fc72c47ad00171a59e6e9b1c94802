@@ -143,9 +143,8 @@ public class mainClass {
 		solution.add(distribution.clone());
 		if(position < distribution.length) {
 			nextPos = nextPosAvailable(position, distribution, field);
-			for(int j=distribution[position]; j>0; j--) {	
-				//nextPos = nextPosAvailable(position, distribution, field);
-				if(nextPos < distribution.length ) {//&& roomForSand(nextPos, distribution, field)) {
+			for(int j=distribution[position]; j>0; j--) {		
+				if(nextPos < distribution.length && roomForSand(position, distribution, field)) {
 					auxDistribution[position]--;
 					auxDistribution[nextPos]++;
 					loop(nextPos, auxDistribution, solution, field);
@@ -165,7 +164,7 @@ public class mainClass {
 	 * @return the index of the next available position or 5 if there is no more positions
 	 *************************************************************************************/
 	private static int nextPosAvailable(int position, int [] distribution, Field field) {
-		for(int i = position+1; i<distribution.length; i++) {
+		/*for(int i = position+1; i<distribution.length; i++) {
 			if(positions[i-1]) { //Checks if current position is a valid position
 				if(i-1 == 0 && field.getNumber(field.getXt()-1, field.getYt())+distribution[1]<field.getMax()) //North
 					return i;
@@ -176,12 +175,12 @@ public class mainClass {
 				if(i-1 == 3 && field.getNumber(field.getXt()+1, field.getYt())+distribution[4]<field.getMax()) //South
 					return i;
 			}
-		}
-		/*for(int i = position+1; i<distribution.length; i++) {
+		}*/
+		for(int i = position+1; i<distribution.length; i++) {
 			if(positions[i-1]) { //Checks if current position is a valid position
 				return i;
 			}
-		}*/
+		}
 		return 5; //Key to say there's no more places to place sand
 	}
 	
