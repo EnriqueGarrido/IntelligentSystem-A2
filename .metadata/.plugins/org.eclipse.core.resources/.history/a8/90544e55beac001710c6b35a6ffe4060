@@ -1,0 +1,172 @@
+import java.util.*;
+
+public class mainClass {
+	
+	static boolean [] positions= new boolean[4];
+	
+	public static void main(String[] args) {
+		// TO-DO 
+		// - Try catch for the standard input
+		
+		//generateFile();
+		Field field = new Field();
+		field.readField();
+		System.out.println("-----ATTRIBUTES----- \nXt: " + field.getXt());
+		System.out.println("Yt: " + field.getYt());
+		System.out.println("K: " + field.getK());
+		System.out.println("Max: " + field.getMax());
+		System.out.println("Size column: " + field.getSizeC());
+		System.out.println("Size Row: " + field.getSizeR() + "\n-----MATRIX-----");
+		field.printMatrix();
+		successor(field);
+		
+		
+	}
+	
+	private static void successor(Field field) {
+		ArrayList <int[]> adjacentPositions, sandMovements;
+		ArrayList <Action> actions =  new ArrayList<Action>();
+		sandMovements= new ArrayList<int[]>();
+		checkPositions(field);
+		adjacentPositions=moveTractor(field);
+		
+		printAdjacent(adjacentPositions, field);
+		MoveSandBool(field, sandMovements);
+		createActions(adjacentPositions, sandMovements, actions);
+		System.out.println("-----ACTIONS-----");
+		printActions(actions);
+	}
+	
+	private static ArrayList<int[]> moveTractor(Field field) {
+	ArrayList <int[]> adjacent= new ArrayList<int[]>();
+	//NORTH		
+		if (positions[0]==true) {
+			int [] vectorn= new int[2];
+			vectorn[0]= field.getXt()-1;
+			vectorn[1]= field.getYt();
+			adjacent.add(vectorn);
+		}
+	//WEST
+		if (positions[1]==true) {
+			int [] vectorw= new int[2];
+			vectorw[0]= field.getXt();
+			vectorw[1]= field.getYt()-1;
+			adjacent.add(vectorw);
+		}
+	//EAST
+		if (positions[2]==true) {
+			int [] vectore= new int[2];
+			vectore[0]= field.getXt();
+			vectore[1]= field.getYt()+1;
+			adjacent.add(vectore);
+		}
+	//SOUTH
+		if (positions[3]==true) {
+			int [] vectors= new int[2];
+			vectors[0]= field.getXt()+1;
+			vectors[1]= field.getYt();
+			adjacent.add(vectors);
+		}
+		return adjacent;
+	}
+
+	
+	public static void printAdjacent (ArrayList<int[]> adjacent, Field field) {
+		Iterator <int[]> it;
+		it=adjacent.iterator();
+		System.out.println("-----ADJACENT POSITIONS-----");
+		while(it.hasNext()) {
+			int [] vector= it.next();
+			System.out.println(vector[0] +" "+ vector[1] + "----->" +field.getNumber(vector[0], vector[1]));
+		}
+	}
+	
+	public static void MoveSandBool(Field field, ArrayList<int[]> solution) {
+		int [] distribution =  new int[5]; //[pos actual, norte, oeste, este sur]
+		distribution[0]=5;
+		loop(0, distribution, solution, field);
+		///////////////////////////////////////////////////////////////////////////////////////////////
+		Iterator<int[]> it = solution.iterator();
+		while(it.hasNext()) {
+			int[] sol = it.next();
+			System.out.println("["+sol[0]+", "+sol[1]+", "+sol[2]+", "+sol[3]+", "+sol[4]+"]");
+		}
+		///////////////////////////////////////////////////////////////////////////////////////////////
+	}
+	
+	private static void loop(int position, int [] distribution, ArrayList<int[]> solution, Field field) {
+		int[] auxDistribution;
+		int nextPos;
+		auxDistribution = distribution.clone();
+		solution.add(distribution.clone());
+		if(position < distribution.length) {
+			nextPos = nextPosAvailable(position, distribution, field);
+			for(int j=distribution[position]; j>0; j--) {		
+				if(nextPos < distribution.length) {
+					auxDistribution[position]--;
+					auxDistribution[nextPos]++;
+					loop(nextPos, auxDistribution, solution, field);
+				}
+			}
+		}else return;
+	}
+	
+	private static int nextPosAvailable(int position, int [] distribution, Field field) {
+		for(int i = position+1; i<distribution.length; i++) {
+			if(positions[i-1]) { //Falta comprobar que no sea mayor que el máximo
+				return i;
+			}
+		}
+		return 5; //Key to say there's no more places to place sand
+	}
+	
+	private static void createActions(ArrayList<int[]> adjacentPositions, ArrayList<int[]> sandMovements,
+									  ArrayList<Action> actions) {
+		for(int i=0; i<adjacentPositions.size(); i++) {
+			for(int j=0; j<sandMovements.size(); j++) {
+				actions.add(new Action(adjacentPositions.get(i), sandMovements.get(j)));
+			}
+		}
+	}
+	
+	private static void printActions(ArrayList<Action> actions) {
+		Iterator<Action> it = actions.iterator();
+		while(it.hasNext()) {
+			System.out.println(it.next());
+		}
+	}
+	
+	public static boolean[] checkPositions(Field field) {
+		//NORTH		
+			if (field.getXt() > 0 && field.getXt() < field.getSizeR()) {
+				positions[0]= true;
+			}else {
+				positions[0]=false;
+			}
+		//WEST
+			if (field.getYt() > 0 && field.getYt() < field.getSizeC()) {
+				positions[1]=true;
+			}else {
+				positions[1]=false;
+			}
+		//EAST
+			if (field.getYt() < field.getSizeC()-1) {
+				positions[2]=true;
+			}else {
+				positions[2]=false;
+			}
+		//SOUTH
+			if (field.getXt() < field.getSizeR()-1) {
+				positions[3]=true;
+			}else {
+				positions[3]=false;
+			}
+		return positions;
+	}
+	
+	/*private static void generateFile() {
+		FileGenerator fGenerator = new FileGenerator("Setup.txt");
+		fGenerator.generate();
+	}*/
+	
+}//End mainClass

@@ -1,0 +1,18 @@
+package practica;
+
+public class Main {
+	public static void main(String[] args) {
+
+		//int [][] terreno = {{6,8,5},{6,8,2},{2,0,8}};
+		int k = 5;
+		int max = 8;
+		int c = 3;
+		int f = 3;
+		int x = 0;
+		int y = 0;
+		
+		Estado estadoInicial = new Estado(x,y,k);
+		EspacioEstados ee = new EspacioEstados(estadoInicial,max,f,c);
+		
+	}
+}

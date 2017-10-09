@@ -1,0 +1,33 @@
+package practica;
+
+public class Accion {
+
+	private Integer[] movimientoTractor;
+	private ArrayList<Distribucion> distribuciones; 
+		
+		public Accion(Integer[] movimientoTractor, ArrayList<Distribucion> distribuciones) {
+			this.movimientoTractor = movimientoTractor;
+			this.distribuciones = distribuciones;
+		}
+		public Integer[] getMovimientoTractor() {
+			return movimientoTractor;
+		}
+
+
+
+		public void setMovimientoTractor(Integer[] movimientoTractor) {
+			this.movimientoTractor = movimientoTractor;
+		}
+
+
+
+		public ArrayList<Distribucion> getDistribuciones() {
+			return distribuciones;
+		}
+
+
+
+		public void setDistribuciones(ArrayList<Distribucion> distribuciones) {
+			this.distribuciones = distribuciones;
+		}
+}

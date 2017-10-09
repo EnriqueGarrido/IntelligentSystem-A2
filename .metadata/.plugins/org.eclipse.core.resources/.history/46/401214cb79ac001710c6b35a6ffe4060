@@ -1,0 +1,13 @@
+
+public class Action {
+
+	private int xt, yt; //Position where the tractor is moved
+	private int[] sandMovement;
+	
+	public Action(int[] coor, int[] sand) {
+		xt = coor[0];
+		yt = coor[1];
+		sandMovement = sand.clone();
+	}
+	
+}
