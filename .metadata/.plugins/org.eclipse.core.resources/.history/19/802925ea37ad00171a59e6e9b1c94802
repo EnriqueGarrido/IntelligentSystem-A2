@@ -1,11 +1,10 @@
 import java.util.*;
-import java.io.*;
 
 public class mainClass {
 	
 	static boolean [] positions= new boolean[4];
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		// TO-DO 
 		// - File writter
 		// - Comprobar que la cantidad a la posicion a la que movemos es menor que el max
@@ -25,14 +24,17 @@ public class mainClass {
 		actions=successor(field);
 		
 		////////////////////////////////////
-		System.out.println("--------PERMFORM AN ACTION------");
-		actions.get(1).perform(field);
-		String nextMov= " Performing the action: "+actions.get(1) +"\n Xt: " + field.getXt() + "\n Yt: " + field.getYt() + "\n K: " + field.getK() + "\n Max: " + field.getMax() + "\n Size column: " + field.getSizeC() + "\n Size Row: " + field.getSizeR() + "\n -----MATRIX-----";
-		System.out.println(nextMov);
+		System.out.println("--------PERMFORM AN ACTION------\n Aplico la Accion: "+actions.get(3));
+		actions.get(3).perform(field);
+		System.out.println("New State:");
+		System.out.println("Xt: " + field.getXt());
+		System.out.println("Yt: " + field.getYt());
+		System.out.println("K: " + field.getK());
+		System.out.println("Max: " + field.getMax());
+		System.out.println("Size column: " + field.getSizeC());
+		System.out.println("Size Row: " + field.getSizeR() + "\n-----MATRIX-----");
 		field.printMatrix();
-		String matrix=field.saveMatrix();
 		///////////////////////////////////
-		field.generateOutput(nextMov, matrix);
 	}
 	
 	/********************************************************************************
@@ -165,7 +167,7 @@ public class mainClass {
 	 *************************************************************************************/
 	private static int nextPosAvailable(int position, int [] distribution, Field field) {
 		for(int i = position+1; i<distribution.length; i++) {
-			if(positions[i-1]) { //Falta comprobar que no sea mayor que el maximo
+			if(positions[i-1]) { //Falta comprobar que no sea mayor que el máximo
 				if(i-1 == 0 && field.getNumber(field.getXt()-1, field.getYt())+distribution[1]<field.getMax()) //Al norte
 					return i;
 				if(i-1 == 1 && field.getNumber(field.getXt(), field.getYt()-1)+distribution[2]<field.getMax()) //Al oeste
