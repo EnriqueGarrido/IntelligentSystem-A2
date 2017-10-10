@@ -8,12 +8,10 @@ import java.io.IOException;
 
 public class Field {
 	
-	private String path;
 	private int [][] field;
 	private int xt, yt, k, max, sizec, sizer;
 	
-	public Field(String path) {
-		this.path = path;
+	public Field() {
 		readField();
 	}//End constructor
 	
@@ -22,7 +20,7 @@ public class Field {
 		FileReader fr = null;
 		BufferedReader br = null;
 		try{
-			archivo = new File(path);
+			archivo = new File("Setup.txt");
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
 			String line=br.readLine();//first line

@@ -14,7 +14,6 @@ INDEX VERSION 1.130+C:\Users\Adrián Ollero\Documents\GitHub\Inteligentes\Intelli
 2075892729.index
 3627084181.index
 2816613229.index
-3262688244.index
 1654674800.index
 134360950.index
 2725125150.index

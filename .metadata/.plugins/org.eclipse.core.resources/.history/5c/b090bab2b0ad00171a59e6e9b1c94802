@@ -23,7 +23,7 @@ public class mainClass {
 	 **********************************************************************************/
 	public static void main(String[] args) throws IOException {		
 		ArrayList<Action> actions;
-		Field field = new Field("Setup.txt");
+		Field field = new Field();
 		System.out.println("-----ATTRIBUTES----- \nXt: " + field.getXt());
 		System.out.println("Yt: " + field.getYt());
 		System.out.println("K: " + field.getK());
