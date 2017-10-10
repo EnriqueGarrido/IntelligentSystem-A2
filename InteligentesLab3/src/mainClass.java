@@ -11,7 +11,7 @@ import java.io.*;
  **********************************************************************************************************/
 public class mainClass {
 	
-	static boolean [] positions= new boolean[4];	//Array to key if there is possible to move to a direction [N, W, E, S]
+	static boolean [] positions= new boolean[4]; //Array to key if there is possible to move to a direction [N, W, E, S]
 	
 	/**********************************************************************************
 	 * Method name: main
@@ -47,7 +47,7 @@ public class mainClass {
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		field.generateOutput(nextMov, matrix);
-	}
+	}//End main
 	
 	/********************************************************************************
 	 * Method name: successor
@@ -55,6 +55,7 @@ public class mainClass {
 	 * obtaining the adjacent positions where the tractor can move and all the 
 	 * possible sand distributions and combine them all
 	 * @param field -> current state of the field and the tractor position
+	 * @return an ArrayList with all the possible actions
 	 ********************************************************************************/
 	private static ArrayList<Action> successor(Field field) {
 		ArrayList <int[]> adjacentPositions, sandMovements;
@@ -68,7 +69,7 @@ public class mainClass {
 		createActions(adjacentPositions, sandMovements, actions);
 		printActions(actions);
 		return actions;
-	}
+	}//End successor
 	
 	/***********************************************************************************************
 	 * Method name: removeMax
@@ -90,7 +91,7 @@ public class mainClass {
 				aux.add(s);
 		}
 		sandMovements.removeAll(aux);
-	}
+	}//End removeMax
 	
 	/********************************************************************************
 	 * Method name: moveTractor
@@ -132,7 +133,7 @@ public class mainClass {
 			adjacent.add(vectors);
 		}
 		return adjacent;
-	}
+	}//End moveTractor
 
 	/*******************************************************************************
 	 * Method name: printAdjacent
@@ -147,7 +148,7 @@ public class mainClass {
 			int [] vector= it.next();
 			System.out.println(vector[0] +" "+ vector[1] + "----->" +field.getNumber(vector[0], vector[1]));
 		}
-	}
+	}//End printAdjacent
 	
 	/******************************************************************************
 	 * Method name: moveSand
@@ -161,7 +162,7 @@ public class mainClass {
 		int [] distribution =  new int[5]; //[pos actual, norte, oeste, este sur]
 		distribution[0]=field.getNumber(field.getXt(), field.getYt());
 		loop(0, distribution, sandMovements, field);
-	}
+	}//End moveSand
 	
 	/*******************************************************************************
 	 * Method name: loop
@@ -188,7 +189,7 @@ public class mainClass {
 				}
 			}
 		}else return;
-	}
+	}//End loop
 	
 	/*************************************************************************************
 	 * Method name: nextPositions
@@ -214,7 +215,7 @@ public class mainClass {
 			}
 		}
 		return 5; //Key to say there's no more places to place sand
-	}
+	}//End nextPosAvailable
 	
 	/************************************************************************************
 	 * Method name: createActions
@@ -231,7 +232,7 @@ public class mainClass {
 				actions.add(new Action(adjacentPositions.get(i), sandMovements.get(j)));
 			}
 		}
-	}
+	}//End createActions
 	
 	/*************************************************************************************
 	 * Method name: printAction
@@ -244,7 +245,7 @@ public class mainClass {
 		while(it.hasNext()) {
 			System.out.println(it.next());
 		}
-	}
+	}//End printActions
 	
 	/**************************************************************************************
 	 * Method name: checkPositions
@@ -278,6 +279,6 @@ public class mainClass {
 			}else {
 				positions[3]=false;
 			}
-	}
+	}//End checkPositions
 	
 }//End mainClass

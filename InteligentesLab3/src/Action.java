@@ -1,18 +1,29 @@
 public class Action {
 
 	private int xt, yt; //Position where the tractor is moved
-	private int[] sandMovement;
+	private int[] sandMovement; //Vector which contains the quantities of sand moved in each action
 	
+	/*************************************************************************************
+	 * Method name: Action
+	 * Description: Constructor class for the actions
+	 * @param coor -> the coordinates the tractor will move
+	 * @param sand -> the quantities of sand moved
+	 ************************************************************************************/
 	public Action(int[] coor, int[] sand) {
 		xt = coor[0];
 		yt = coor[1];
 		sandMovement = sand.clone();
-	}
+	}//End constructor
 	
+	/*************************************************************************************
+	 * Method name: toString
+	 * Description: it will print the movement of the tractor and the quantities of sand moved in each action
+	 * @return the information said before
+	 ************************************************************************************/
 	public String toString() {
 		return "Tractor: ("+xt+", "+yt+") Sand: ["+sandMovement[0]+", "+sandMovement[1]+", "+sandMovement[2]+
 				", "+sandMovement[3]+", "+sandMovement[4]+"]";
-	}
+	}//End toString
 	
 	/*************************************************************************************
 	 * Method name: perform
@@ -41,5 +52,6 @@ public class Action {
 		
 		field.setXt(xt);
 		field.setYt(yt);
-	}
+	}//End perform
+	
 }//End class

@@ -8,15 +8,29 @@ import java.io.IOException;
 
 public class Field {
 	
-	private String path;
-	private int [][] field;
-	private int xt, yt, k, max, sizec, sizer;
+	private String path; //the place where the file is situated
+	private int [][] field; //the state of the floor with the quantities of sand
+	private int xt; //The coordinate x
+	private int yt; //The coordinate y
+	private int k; //The quantity of sand we want in each position
+	private int max; //The maximum number of sand in each position
+	private int sizec; //number of columns
+	private int sizer; //number of rows
 	
+	/*************************************************************************************
+	 * Method name: Field
+	 * Description: Constructor class for the field
+	 * @param path -> the place where the file is situated
+	 ************************************************************************************/
 	public Field(String path) {
 		this.path = path;
 		readField();
 	}//End constructor
 	
+	/*************************************************************************************
+	 * Method name: readField
+	 * Description: it will get file's contents. Then, in other methods we will analyze the information.
+	 ************************************************************************************/
 	public void readField() {
 		File archivo = null;
 		FileReader fr = null;
@@ -48,6 +62,13 @@ public class Field {
 		
 	}//End readField
 	
+	/*************************************************************************************
+	 * Method name: readFirstLine
+	 * Description: it will catch the values for the variables xt, xy, k, max, sicec and sicer
+	 * and inform about some errors checking the values
+	 * @param line -> the string with the information we will catch for each variable
+	 * @throws Exception
+	 ************************************************************************************/
 	public void readFirstLine(String line)throws Exception{
 		String[] values=new String[6];
 		int i=0;
@@ -72,6 +93,12 @@ public class Field {
 		}
 	}//End readFirstLine
 	
+	/*************************************************************************************
+	 * Method name: generateValuesField
+	 * Description: it will catch the sand values for the field.
+	 * @param line -> the string with the information we will catch for the quantities of sand
+	 * @throws Exception
+	 ************************************************************************************/
 	public void generateValuesField(String line) throws Exception{
 		String[] values=new String[sizec*sizer];
 		field=new int[sizer][sizec];
@@ -91,6 +118,10 @@ public class Field {
 		}
 	}//End generateValuesField
 
+	/*************************************************************************************
+	 * Method name: printMatrix
+	 * Description: it will print the current state of the field
+	 ************************************************************************************/
 	public void printMatrix() {
 		for(int j=0;j<sizer;j++){
 			for(int k=0;k<sizec;k++){
@@ -98,16 +129,33 @@ public class Field {
 			}
 			System.out.println();
 		}
-	}
+	}//End printMatrix
 	
+	/*************************************************************************************
+	 * Method name: getNumber
+	 * Description: it returns the quantity of sand in that position
+	 * @param xt -> The coordinate x
+	 * @param xy -> The coordinate y
+	 ************************************************************************************/
 	public int getNumber(int xt, int yt) {
 		return field[xt][yt];
-	}
+	}//End getNumber
 	
+	/*************************************************************************************
+	 * Method name: setNumber
+	 * Description: it returns the new quantity of sand in that position
+	 * @param xt -> The coordinate x
+	 * @param xy -> The coordinate y
+	 * @param quantity -> The quantity of sand which that position have
+	 ************************************************************************************/
 	public void setNumber(int xt, int yt, int quantity) {
 		field[xt][yt] =quantity;
-	}
+	}//End setNumber
 	
+	/*************************************************************************************
+	 * Method name: saveMatrix
+	 * Description: it saves in a string the current state of the field
+	 ************************************************************************************/
 	public String saveMatrix() {
 		String matrix="";
 		for(int j=0;j<sizer;j++){
@@ -117,13 +165,14 @@ public class Field {
 			matrix=matrix + "\n";
 		}
 		return matrix;
-	}
+	}//End saveMatrix
 	
 	/**************************************************************************************
 	 * Method name: generateOutput
 	 * Description: it puts in a file the new state of the tractor and the field
 	 * @param nextMov -> new state of the tractor
 	 * @param matrix -> it is the current state of the field with the sand
+	 * @throws IOException
 	 *************************************************************************************/
 	public void generateOutput(String nextMov, String matrix) throws IOException {
 		String path= "Output.txt";
@@ -134,65 +183,126 @@ public class Field {
 		br.newLine();
 		br.write(matrix);
 		br.close();
-	}
+	}//End generateOutput
 	
-	
-	
+	/*************************************************************************************
+	 * Method name: getField
+	 * Description: it gets the field
+	 * @return the field
+	 ************************************************************************************/
 	public int[][] getField() {
 		return field;
-	}
+	}//End getField
 
+	/*************************************************************************************
+	 * Method name: setField
+	 * Description: it sets the field
+	 ************************************************************************************/
 	public void setField(int[][] field) {
 		this.field = field;
-	}
+	}//End setField
 
+	/*************************************************************************************
+	 * Method name: getXt
+	 * Description: it gets the coordinate x where the tractor is situated
+	 * @return the coordinate x
+	 ************************************************************************************/
 	public int getXt() {
 		return xt;
-	}
+	}//End getXt
 
+	/*************************************************************************************
+	 * Method name: setXt
+	 * Description: it sets the coordinate x
+	 ************************************************************************************/
 	public void setXt(int xt) {
 		this.xt = xt;
-	}
+	}//End setXt
 
+	/*************************************************************************************
+	 * Method name: getYt
+	 * Description: it gets the coordinate y where the tractor is situated
+	 * @return the coordinate y
+	 ************************************************************************************/
 	public int getYt() {
 		return yt;
-	}
+	}//End getYt
 
+	/*************************************************************************************
+	 * Method name: setYt
+	 * Description: it sets the coordinate y
+	 ************************************************************************************/
 	public void setYt(int yt) {
 		this.yt = yt;
-	}
+	}//End setYt
 
+	/*************************************************************************************
+	 * Method name: getK
+	 * Description: it gets the k value
+	 * @return quantity of sand we want in each position (k)
+	 ************************************************************************************/
 	public int getK() {
 		return k;
-	}
+	}//End getK
 
+	/*************************************************************************************
+	 * Method name: setK
+	 * Description: it sets k value
+	 ************************************************************************************/
 	public void setK(int k) {
 		this.k = k;
-	}
+	}//End setK
 
+	/*************************************************************************************
+	 * Method name: getMax
+	 * Description: it gets the max value
+	 * @return maximum quantity of sand (max)
+	 ************************************************************************************/
 	public int getMax() {
 		return max;
-	}
+	}//End getMax
 
+	/*************************************************************************************
+	 * Method name: setMax
+	 * Description: it sets the max value
+	 ************************************************************************************/
 	public void setMax(int max) {
 		this.max = max;
-	}
+	}//End setMax
 
+	/*************************************************************************************
+	 * Method name: getSizeR
+	 * Description: it gets the number of rows
+	 * @return number of rows (sizer)
+	 ************************************************************************************/
 	public int getSizeR() {
 		return sizer;
-	}
+	}//End getSizeR
 
-	public void setSizer(int size) {
+	/*************************************************************************************
+	 * Method name: setSizeR
+	 * Description: it sets the number of rows
+	 ************************************************************************************/
+	public void setSizeR(int size) {
 		this.sizer = size;
-	}
+	}//End setSizeR
 	
+	/*************************************************************************************
+	 * Method name: getSizeC
+	 * Description: it gets the number of columns
+	 * @return number of columns (sizec)
+	 ************************************************************************************/
 	public int getSizeC() {
 		return sizec;
-	}
+	}//End getSizeC
 	
+	/*************************************************************************************
+	 * Method name: setSizec
+	 * Description: it sets the number of columns
+	 ************************************************************************************/
 	public void setSizec(int size) {
 		this.sizec=size;
-	}
+	}//End setSizec
 	
 }//End Field class
 
