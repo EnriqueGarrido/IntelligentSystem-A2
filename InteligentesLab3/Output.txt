@@ -1,11 +1,10 @@
- Performing the action: Tractor: (1, 0) Sand: [2, 0, 0, 1, 1]
- Xt: 1
- Yt: 0
+ Performing the action: Tractor: (0, 1) Sand: [1, 0, 0, 1, 2]
+ Xt: 0
+ Yt: 1
  K: 5
  Max: 8
- Size column: 3
- Size Row: 3
+ Size column: 2
+ Size Row: 2
  -----MATRIX-----
-2 7 3 
-7 8 4 
-1 1 2 
+1 7 
+5 8 
