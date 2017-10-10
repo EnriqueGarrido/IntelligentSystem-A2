@@ -60,8 +60,7 @@ public class Field {
 		max=Integer.parseInt(values[3]);
 		sizec=Integer.parseInt(values[4]);
 		sizer=Integer.parseInt(values[5]);
-		if(xt<0 || xt>=sizer || yt<0 || yt>=sizec || k<1 || max<1 || sizer<1 || sizec<1) 
-			throw new Exception("First line format is incorrect");
+		if(xt<0 || yt<0 || k<1 || max<1 || sizer<1 || sizec<1) throw new Exception("First line format is incorrect");
 		try {
 			if (max<=k) {
 				throw new Exception();
