@@ -11,16 +11,8 @@ import java.io.*;
  **********************************************************************************************************/
 public class mainClass {
 	
-	static boolean [] positions= new boolean[4];	//Array to key if there is possible to move to a direction [N, W, E, S]
+	static boolean [] positions= new boolean[4];
 	
-	/**********************************************************************************
-	 * Method name: main
-	 * Description: everuthing starts here. The succesor function is called. Also
-	 * there is an example of a performed action where the action to be performed 
-	 * in the current state of the field is chosen randomly
-	 * @param args
-	 * @throws IOException
-	 **********************************************************************************/
 	public static void main(String[] args) throws IOException {		
 		ArrayList<Action> actions;
 		Field field = new Field();
@@ -242,6 +234,7 @@ public class mainClass {
 	private static void printActions(ArrayList<Action> actions) {
 		Iterator<Action> it = actions.iterator();
 		System.out.println("\n-----ACTIONS-----      A  N  W  E  S");
+
 		while(it.hasNext()) {
 			System.out.println(it.next());
 		}

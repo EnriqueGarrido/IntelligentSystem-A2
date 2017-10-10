@@ -31,8 +31,7 @@ public class Field {
 			matrix= matrix.substring(1, matrix.length());
 			generateValuesField(matrix);
 		}catch (Exception e) {
-			System.out.println("Error in file format. Check file: \""+e.getMessage()+"\"");
-			System.exit(0);
+			e.printStackTrace();
 		}finally{
 			try{
 				if(null != fr){
@@ -43,7 +42,7 @@ public class Field {
 			}
 		}
 		
-	}//End readField
+	}
 	
 	public void readFirstLine(String line)throws Exception{
 		String[] values=new String[6];
@@ -57,7 +56,6 @@ public class Field {
 		max=Integer.parseInt(values[3]);
 		sizec=Integer.parseInt(values[4]);
 		sizer=Integer.parseInt(values[5]);
-		if(xt<0 || yt<0 || k<1 || max<1 || sizer<1 || sizec<1) throw new Exception("First line format is incorrect");
 		try {
 			if (max<=k) {
 				throw new Exception();
@@ -66,7 +64,7 @@ public class Field {
 			System.out.println("Max must be greater than k");
 			System.exit(0);
 		}
-	}//End readFirstLine
+	}
 	
 	public void generateValuesField(String line) throws Exception{
 		String[] values=new String[sizec*sizer];
@@ -78,14 +76,17 @@ public class Field {
 			         if(Integer.parseInt(retval)<0 || Integer.parseInt(retval)>max) throw new Exception();
 			}
 			i=0;
-			for(int j=0;j<sizer;j++)
-				for(int k=0;k<sizec;k++)
+			for(int j=0;j<sizer;j++){
+				for(int k=0;k<sizec;k++){
 					field[j][k]=Integer.parseInt(values[i++]);
+				}
+			}
 		}catch(Exception ex){ // handle your exception
 			System.out.println("Error reading field. Check file. : " + ex.getMessage());
 			System.exit(0);
 		}
-	}//End generateValuesField
+		
+	}
 
 	public void printMatrix() {
 		for(int j=0;j<sizer;j++){

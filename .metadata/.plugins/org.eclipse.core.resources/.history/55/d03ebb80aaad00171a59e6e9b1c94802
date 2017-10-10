@@ -11,8 +11,14 @@ public class Field {
 	private int [][] field;
 	private int xt, yt, k, max, sizec, sizer;
 	
-	public Field() {	
+	public Field() {
+		
 	}//End constructor
+	/*
+	public void writeField() {
+		FileGenerator fGenerator = new FileGenerator("Setup.txt");
+		fGenerator.generate();
+	}*/
 	
 	public void readField() {
 		File archivo = null;
@@ -31,8 +37,7 @@ public class Field {
 			matrix= matrix.substring(1, matrix.length());
 			generateValuesField(matrix);
 		}catch (Exception e) {
-			System.out.println("Error in file format. Check file: \""+e.getMessage()+"\"");
-			System.exit(0);
+			e.printStackTrace();
 		}finally{
 			try{
 				if(null != fr){
@@ -43,7 +48,7 @@ public class Field {
 			}
 		}
 		
-	}//End readField
+	}
 	
 	public void readFirstLine(String line)throws Exception{
 		String[] values=new String[6];
@@ -57,7 +62,6 @@ public class Field {
 		max=Integer.parseInt(values[3]);
 		sizec=Integer.parseInt(values[4]);
 		sizer=Integer.parseInt(values[5]);
-		if(xt<0 || yt<0 || k<1 || max<1 || sizer<1 || sizec<1) throw new Exception("First line format is incorrect");
 		try {
 			if (max<=k) {
 				throw new Exception();
@@ -66,7 +70,7 @@ public class Field {
 			System.out.println("Max must be greater than k");
 			System.exit(0);
 		}
-	}//End readFirstLine
+	}
 	
 	public void generateValuesField(String line) throws Exception{
 		String[] values=new String[sizec*sizer];
@@ -78,62 +82,18 @@ public class Field {
 			         if(Integer.parseInt(retval)<0 || Integer.parseInt(retval)>max) throw new Exception();
 			}
 			i=0;
-			for(int j=0;j<sizer;j++)
-				for(int k=0;k<sizec;k++)
+			for(int j=0;j<sizer;j++){
+				for(int k=0;k<sizec;k++){
 					field[j][k]=Integer.parseInt(values[i++]);
+				}
+			}
 		}catch(Exception ex){ // handle your exception
 			System.out.println("Error reading field. Check file. : " + ex.getMessage());
 			System.exit(0);
 		}
-	}//End generateValuesField
+		
+	}
 
-	public void printMatrix() {
-		for(int j=0;j<sizer;j++){
-			for(int k=0;k<sizec;k++){
-				System.out.print(field[j][k]+ " ");
-			}
-			System.out.println();
-		}
-	}
-	
-	public int getNumber(int xt, int yt) {
-		return field[xt][yt];
-	}
-	
-	public void setNumber(int xt, int yt, int quantity) {
-		field[xt][yt] =quantity;
-	}
-	
-	public String saveMatrix() {
-		String matrix="";
-		for(int j=0;j<sizer;j++){
-			for(int k=0;k<sizec;k++){
-				matrix= matrix +field[j][k]+ " ";
-			}
-			matrix=matrix + "\n";
-		}
-		return matrix;
-	}
-	
-	/**************************************************************************************
-	 * Method name: generateOutput
-	 * Description: it puts in a file the new state of the tractor and the field
-	 * @param nextMov -> new state of the tractor
-	 * @param matrix -> it is the current state of the field with the sand
-	 *************************************************************************************/
-	public void generateOutput(String nextMov, String matrix) throws IOException {
-		String path= "Output.txt";
-		File file=new File(path);
-		BufferedWriter br;
-		br= new BufferedWriter(new FileWriter(file));
-		br.write(nextMov);
-		br.newLine();
-		br.write(matrix);
-		br.close();
-	}
-	
-	
-	
 	public int[][] getField() {
 		return field;
 	}
@@ -188,6 +148,51 @@ public class Field {
 	
 	public void setSizec(int size) {
 		this.sizec=size;
+	}
+
+	public void printMatrix() {
+		for(int j=0;j<sizer;j++){
+			for(int k=0;k<sizec;k++){
+				System.out.print(field[j][k]+ " ");
+			}
+			System.out.println();
+		}
+	}
+	
+	public int getNumber(int xt, int yt) {
+		return field[xt][yt];
+	}
+	
+	public void setNumber(int xt, int yt, int quantity) {
+		field[xt][yt] =quantity;
+	}
+	
+	public String saveMatrix() {
+		String matrix="";
+		for(int j=0;j<sizer;j++){
+			for(int k=0;k<sizec;k++){
+				matrix= matrix +field[j][k]+ " ";
+			}
+			matrix=matrix + "\n";
+		}
+		return matrix;
+	}
+	
+	/**************************************************************************************
+	 * Method name: generateOutput
+	 * Description: it puts in a file the new state of the tractor and the field
+	 * @param nextMov -> new state of the tractor
+	 * @param matrix -> it is the current state of the field with the sand
+	 *************************************************************************************/
+	public void generateOutput(String nextMov, String matrix) throws IOException {
+		String path= "Output.txt";
+		File file=new File(path);
+		BufferedWriter br;
+		br= new BufferedWriter(new FileWriter(file));
+		br.write(nextMov);
+		br.newLine();
+		br.write(matrix);
+		br.close();
 	}
 	
 }//End Field class

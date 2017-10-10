@@ -1,27 +1,14 @@
 import java.util.*;
 import java.io.*;
 
-/***********************************************************************************************************
- * Class name: mainClass
- * Description: in this class all computations of the executions of the problem are performed, including
- * the main method with an example of a performed action on the field
- * @author Adrian Ollero Jimenez, Enrique Garrido Pozo, Pablo Mora Herreros 
- * Subject: Intelligent Systems
- * Group: A2
- **********************************************************************************************************/
 public class mainClass {
 	
-	static boolean [] positions= new boolean[4];	//Array to key if there is possible to move to a direction [N, W, E, S]
+	static boolean [] positions= new boolean[4];
 	
-	/**********************************************************************************
-	 * Method name: main
-	 * Description: everuthing starts here. The succesor function is called. Also
-	 * there is an example of a performed action where the action to be performed 
-	 * in the current state of the field is chosen randomly
-	 * @param args
-	 * @throws IOException
-	 **********************************************************************************/
-	public static void main(String[] args) throws IOException {		
+	public static void main(String[] args) throws IOException {
+		// TO-DO 
+		// - Try catch for the standard input
+		
 		ArrayList<Action> actions;
 		Field field = new Field();
 		field.readField();
@@ -39,9 +26,7 @@ public class mainClass {
 		Random rd = new Random(System.currentTimeMillis());
 		int chosen = rd.nextInt(actions.size());
 		actions.get(chosen).perform(field);
-		String nextMov= " Performing the action: "+actions.get(chosen) +"\n Xt: " + field.getXt() + "\n Yt: " + field.getYt() 
-				+ "\n K: " + field.getK() + "\n Max: " + field.getMax() + "\n Size column: " + field.getSizeC() + "\n Size Row: " 
-				+ field.getSizeR() + "\n -----MATRIX-----";
+		String nextMov= " Performing the action: "+actions.get(chosen) +"\n Xt: " + field.getXt() + "\n Yt: " + field.getYt() + "\n K: " + field.getK() + "\n Max: " + field.getMax() + "\n Size column: " + field.getSizeC() + "\n Size Row: " + field.getSizeR() + "\n -----MATRIX-----";
 		System.out.println(nextMov);
 		field.printMatrix();
 		String matrix=field.saveMatrix();
@@ -182,9 +167,12 @@ public class mainClass {
 		if(position < distribution.length) {
 			nextPos = nextPosAvailable(position, distribution, field);
 			for(int j=distribution[position]; j>0; j--) {	
-				if(nextPos < distribution.length) {
+				//nextPos = nextPosAvailable(position, distribution, field);
+				if(nextPos < distribution.length) {// && roomForSand(nextPos, distribution, field)) {
 					auxDistribution[position]--;
-					auxDistribution[nextPos]++; 
+					auxDistribution[nextPos]++;
+					//if(!roomForSand(nextPos, auxDistribution, field)) continue;
+					//else 
 					loop(nextPos, auxDistribution, solution, field);
 				}
 			}
@@ -242,6 +230,7 @@ public class mainClass {
 	private static void printActions(ArrayList<Action> actions) {
 		Iterator<Action> it = actions.iterator();
 		System.out.println("\n-----ACTIONS-----      A  N  W  E  S");
+
 		while(it.hasNext()) {
 			System.out.println(it.next());
 		}

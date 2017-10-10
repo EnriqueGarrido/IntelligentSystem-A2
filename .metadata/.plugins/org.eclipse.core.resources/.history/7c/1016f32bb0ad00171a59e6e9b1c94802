@@ -17,8 +17,7 @@ public class Action {
 	/*************************************************************************************
 	 * Method name: perform
 	 * Description: modifies the state of the field passed as argument with the information
-	 * set on the attributes, changing the position of the tractor and modifying the 
-	 * quantity on the field
+	 * set on the attributes 
 	 * @param field -> current state of the field
 	 ************************************************************************************/
 	public void perform(Field field) {
