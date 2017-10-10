@@ -26,8 +26,8 @@ public class mainClass {
 		
 		////////////////////////////////////
 		System.out.println("--------PERMFORM AN ACTION------");
-		actions.get(3).perform(field);
-		String nextMov= " Performing the action: "+actions.get(3) +"\n Xt: " + field.getXt() + "\n Yt: " + field.getYt() + "\n K: " + field.getK() + "\n Max: " + field.getMax() + "\n Size column: " + field.getSizeC() + "\n Size Row: " + field.getSizeR() + "\n -----MATRIX-----";
+		actions.get(8).perform(field);
+		String nextMov= " Performing the action: "+actions.get(8) +"\n Xt: " + field.getXt() + "\n Yt: " + field.getYt() + "\n K: " + field.getK() + "\n Max: " + field.getMax() + "\n Size column: " + field.getSizeC() + "\n Size Row: " + field.getSizeR() + "\n -----MATRIX-----";
 		System.out.println(nextMov);
 		field.printMatrix();
 		String matrix=field.saveMatrix();
@@ -50,9 +50,27 @@ public class mainClass {
 		adjacentPositions=moveTractor(field);
 		printAdjacent(adjacentPositions, field);
 		moveSand(field, sandMovements);
+		///////////////////////////
+		removeMax(sandMovements, field);
+		///////////////////////////
 		createActions(adjacentPositions, sandMovements, actions);
 		printActions(actions);
 		return actions;
+	}
+	
+	private static void removeMax(ArrayList<int[]> sandMovements, Field field) {
+		ArrayList<int[]> aux = new ArrayList<int[]>();
+		Iterator<int[]> it = sandMovements.iterator();
+		for(int i = 0; i< sandMovements.size(); i++) {
+			int s [] = sandMovements.get(i);
+			if( (s[1]!=0 && s[1]+field.getNumber(field.getXt()-1, field.getYt()) > field.getMax()) || //North
+				(s[2]!=0 && s[2]+field.getNumber(field.getXt(), field.getYt()-1) > field.getMax()) || //West
+				(s[3]!=0 && s[3]+field.getNumber(field.getXt(), field.getYt()+1) > field.getMax()) || //East
+				(s[4]!=0 && s[4]+field.getNumber(field.getXt()+1, field.getYt()) > field.getMax())	  //South V
+			) 
+				aux.add(s);
+		}
+		sandMovements.removeAll(aux);
 	}
 	
 	/********************************************************************************
@@ -145,9 +163,11 @@ public class mainClass {
 			nextPos = nextPosAvailable(position, distribution, field);
 			for(int j=distribution[position]; j>0; j--) {	
 				//nextPos = nextPosAvailable(position, distribution, field);
-				if(nextPos < distribution.length ) {//&& roomForSand(nextPos, distribution, field)) {
+				if(nextPos < distribution.length) {// && roomForSand(nextPos, distribution, field)) {
 					auxDistribution[position]--;
 					auxDistribution[nextPos]++;
+					//if(!roomForSand(nextPos, auxDistribution, field)) continue;
+					//else 
 					loop(nextPos, auxDistribution, solution, field);
 				}
 			}
@@ -187,11 +207,11 @@ public class mainClass {
 	
 	private static boolean roomForSand(int nextPos, int[] distribution, Field field) {
 		if(
-				(nextPos == 0 && field.getNumber(field.getXt()-1, field.getYt())+distribution[1]<field.getMax()) || //North
-				(nextPos == 1 && field.getNumber(field.getXt(), field.getYt()-1)+distribution[2]<field.getMax()) || //West
-				(nextPos == 2 && field.getNumber(field.getXt(), field.getYt()+1)+distribution[3]<field.getMax()) || //East
-				(nextPos == 3 && field.getNumber(field.getXt()+1, field.getYt())+distribution[4]<field.getMax())	//South
-				)
+				(nextPos == 1 && field.getNumber(field.getXt()-1, field.getYt())+distribution[1]<field.getMax()) || //North
+				(nextPos == 2 && field.getNumber(field.getXt(), field.getYt()-1)+distribution[2]<field.getMax()) || //West
+				(nextPos == 3 && field.getNumber(field.getXt(), field.getYt()+1)+distribution[3]<field.getMax()) || //East
+				(nextPos == 4 && field.getNumber(field.getXt()+1, field.getYt())+distribution[4]<field.getMax())	//South
+			)
 			return true;
 		else
 			return false;

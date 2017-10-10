@@ -72,22 +72,24 @@ public class Field {
 		}
 	}
 	
-	public void generateValuesField(String line){
+	public void generateValuesField(String line) throws Exception{
 		String[] values=new String[sizec*sizer];
 		field=new int[sizer][sizec];
-		int i=0;
-		for (String retval: line.split(" ")) {
-		         values[i++]=retval;
-		}
-		i=0;
 		try{
+			int i=0;
+			for (String retval: line.split(" ")) {
+			         values[i++]=retval;
+			         if(Integer.parseInt(retval)<0 || Integer.parseInt(retval)>max) throw new Exception();
+			}
+			i=0;
 			for(int j=0;j<sizer;j++){
 				for(int k=0;k<sizec;k++){
 					field[j][k]=Integer.parseInt(values[i++]);
 				}
 			}
-		}catch(NumberFormatException ex){ // handle your exception
-			ex.printStackTrace();
+		}catch(Exception ex){ // handle your exception
+			System.out.println("Error reading field. Check file. : " + ex.getMessage());
+			System.exit(0);
 		}
 		
 	}
