@@ -1,20 +1,29 @@
 import java.util.*;
 import java.io.*;
 
+/***********************************************************************************************************
+ * Class name: mainClass
+ * Description: in this class all computations of the executions of the problem are performed, including
+ * the main method with an example of a performed action on the field
+ * @author Adrian Ollero Jimenez, Enrique Garrido Pozo, Pablo Mora Herreros 
+ * Subject: Intelligent Systems
+ * Group: A2
+ **********************************************************************************************************/
 public class mainClass {
 	
-	static boolean [] positions= new boolean[4];
+	static boolean [] positions= new boolean[4]; //Array to key if there is possible to move to a direction [N, W, E, S]
 	
-	public static void main(String[] args) throws IOException {
-		// TO-DO 
-		// - File writter
-		// - Comprobar que la cantidad a la posicion a la que movemos es menor que el max
-		// - Errores de numeros negativos
-		// - Try catch for the standard input
-		
+	/**********************************************************************************
+	 * Method name: main
+	 * Description: everuthing starts here. The succesor function is called. Also
+	 * there is an example of a performed action where the action to be performed 
+	 * in the current state of the field is chosen randomly
+	 * @param args
+	 * @throws IOException
+	 **********************************************************************************/
+	public static void main(String[] args) throws IOException {		
 		ArrayList<Action> actions;
-		Field field = new Field();
-		field.readField();
+		Field field = new Field("Setup.txt");
 		System.out.println("-----ATTRIBUTES----- \nXt: " + field.getXt());
 		System.out.println("Yt: " + field.getYt());
 		System.out.println("K: " + field.getK());
@@ -24,16 +33,21 @@ public class mainClass {
 		field.printMatrix();
 		actions=successor(field);
 		
-		////////////////////////////////////
-		System.out.println("--------PERMFORM AN ACTION------");
-		actions.get(3).perform(field);
-		String nextMov= " Performing the action: "+actions.get(3) +"\n Xt: " + field.getXt() + "\n Yt: " + field.getYt() + "\n K: " + field.getK() + "\n Max: " + field.getMax() + "\n Size column: " + field.getSizeC() + "\n Size Row: " + field.getSizeR() + "\n -----MATRIX-----";
+		//////////////////////////////////// EXAMPLE OF AN ACTION APPLIED ////////////////////////////////////////
+		System.out.println("\n--------PERMFORM AN ACTION (Example randomly chosen)------");
+		Random rd = new Random(System.currentTimeMillis());
+		int chosen = rd.nextInt(actions.size());
+		actions.get(chosen).perform(field);
+		String nextMov= " Performing the action: "+actions.get(chosen) +"\n Xt: " + field.getXt() + "\n Yt: " + field.getYt() 
+				+ "\n K: " + field.getK() + "\n Max: " + field.getMax() + "\n Size column: " + field.getSizeC() + "\n Size Row: " 
+				+ field.getSizeR() + "\n -----MATRIX-----";
 		System.out.println(nextMov);
 		field.printMatrix();
 		String matrix=field.saveMatrix();
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		field.generateOutput(nextMov, matrix);
-	}
+	}//End main
 	
 	/********************************************************************************
 	 * Method name: successor
@@ -41,6 +55,7 @@ public class mainClass {
 	 * obtaining the adjacent positions where the tractor can move and all the 
 	 * possible sand distributions and combine them all
 	 * @param field -> current state of the field and the tractor position
+	 * @return an ArrayList with all the possible actions
 	 ********************************************************************************/
 	private static ArrayList<Action> successor(Field field) {
 		ArrayList <int[]> adjacentPositions, sandMovements;
@@ -50,10 +65,33 @@ public class mainClass {
 		adjacentPositions=moveTractor(field);
 		printAdjacent(adjacentPositions, field);
 		moveSand(field, sandMovements);
+		removeMax(sandMovements, field);
 		createActions(adjacentPositions, sandMovements, actions);
 		printActions(actions);
 		return actions;
-	}
+	}//End successor
+	
+	/***********************************************************************************************
+	 * Method name: removeMax
+	 * Description: take the set of distributions and applies the maximum restriction, removing from
+	 * the original set all those that violates this restriction, which is that any cell cannot have
+	 * more sand than the value stated as maximum
+	 * @param sandMovements -> set of sand movements no taking into account the maximum restriction
+	 * @param field -> current state
+	 ***********************************************************************************************/
+	private static void removeMax(ArrayList<int[]> sandMovements, Field field) {
+		ArrayList<int[]> aux = new ArrayList<int[]>();
+		for(int i = 0; i< sandMovements.size(); i++) {
+			int s [] = sandMovements.get(i);
+			if( (s[1]!=0 && s[1]+field.getNumber(field.getXt()-1, field.getYt()) > field.getMax()) || //North
+				(s[2]!=0 && s[2]+field.getNumber(field.getXt(), field.getYt()-1) > field.getMax()) || //West
+				(s[3]!=0 && s[3]+field.getNumber(field.getXt(), field.getYt()+1) > field.getMax()) || //East
+				(s[4]!=0 && s[4]+field.getNumber(field.getXt()+1, field.getYt()) > field.getMax())	  //South V
+			) 
+				aux.add(s);
+		}
+		sandMovements.removeAll(aux);
+	}//End removeMax
 	
 	/********************************************************************************
 	 * Method name: moveTractor
@@ -95,7 +133,7 @@ public class mainClass {
 			adjacent.add(vectors);
 		}
 		return adjacent;
-	}
+	}//End moveTractor
 
 	/*******************************************************************************
 	 * Method name: printAdjacent
@@ -110,7 +148,7 @@ public class mainClass {
 			int [] vector= it.next();
 			System.out.println(vector[0] +" "+ vector[1] + "----->" +field.getNumber(vector[0], vector[1]));
 		}
-	}
+	}//End printAdjacent
 	
 	/******************************************************************************
 	 * Method name: moveSand
@@ -121,10 +159,15 @@ public class mainClass {
 	 * from the current position
 	 ******************************************************************************/
 	public static void moveSand(Field field, ArrayList<int[]> sandMovements) {
-		int [] distribution =  new int[5]; //[pos actual, norte, oeste, este sur]
-		distribution[0]=field.getNumber(field.getXt(), field.getYt());
+		int [] distribution =  new int[5]; //[pos actual, norte, oeste, este sur]7
+		//////////////////////////////////////////////////////////////////////
+		int q = field.getNumber(field.getXt(), field.getYt());
+		if(q > field.getK()) distribution[0]=field.getNumber(field.getXt(), field.getYt()) - field.getK();
+		else distribution[0]=0;
+		/////////////////////////////////////////////////////////////////////
+		//distribution[0]=field.getNumber(field.getXt(), field.getYt());
 		loop(0, distribution, sandMovements, field);
-	}
+	}//End moveSand
 	
 	/*******************************************************************************
 	 * Method name: loop
@@ -144,15 +187,14 @@ public class mainClass {
 		if(position < distribution.length) {
 			nextPos = nextPosAvailable(position, distribution, field);
 			for(int j=distribution[position]; j>0; j--) {	
-				//nextPos = nextPosAvailable(position, distribution, field);
-				if(nextPos < distribution.length && roomForSand(nextPos, distribution, field)) {
+				if(nextPos < distribution.length) {
 					auxDistribution[position]--;
-					auxDistribution[nextPos]++;
+					auxDistribution[nextPos]++; 
 					loop(nextPos, auxDistribution, solution, field);
 				}
 			}
 		}else return;
-	}
+	}//End loop
 	
 	/*************************************************************************************
 	 * Method name: nextPositions
@@ -177,25 +219,8 @@ public class mainClass {
 					return i;
 			}
 		}
-		/*for(int i = position+1; i<distribution.length; i++) {
-			if(positions[i-1]) { //Checks if current position is a valid position
-				return i;
-			}
-		}*/
 		return 5; //Key to say there's no more places to place sand
-	}
-	
-	private static boolean roomForSand(int nextPos, int[] distribution, Field field) {
-		if(
-				(nextPos == 0 && field.getNumber(field.getXt()-1, field.getYt())+distribution[1]<field.getMax()) || //North
-				(nextPos == 1 && field.getNumber(field.getXt(), field.getYt()-1)+distribution[2]<field.getMax()) || //West
-				(nextPos == 2 && field.getNumber(field.getXt(), field.getYt()+1)+distribution[3]<field.getMax()) || //East
-				(nextPos == 3 && field.getNumber(field.getXt()+1, field.getYt())+distribution[4]<field.getMax())	//South
-				)
-			return true;
-		else
-			return false;
-	}
+	}//End nextPosAvailable
 	
 	/************************************************************************************
 	 * Method name: createActions
@@ -212,7 +237,7 @@ public class mainClass {
 				actions.add(new Action(adjacentPositions.get(i), sandMovements.get(j)));
 			}
 		}
-	}
+	}//End createActions
 	
 	/*************************************************************************************
 	 * Method name: printAction
@@ -221,11 +246,11 @@ public class mainClass {
 	 *************************************************************************************/
 	private static void printActions(ArrayList<Action> actions) {
 		Iterator<Action> it = actions.iterator();
-		System.out.println("-----ACTIONS-----");
+		System.out.println("\n-----ACTIONS-----      A  N  W  E  S");
 		while(it.hasNext()) {
 			System.out.println(it.next());
 		}
-	}
+	}//End printActions
 	
 	/**************************************************************************************
 	 * Method name: checkPositions
@@ -259,6 +284,6 @@ public class mainClass {
 			}else {
 				positions[3]=false;
 			}
-	}
+	}//End checkPositions
 	
 }//End mainClass

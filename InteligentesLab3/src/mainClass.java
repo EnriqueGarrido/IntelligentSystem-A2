@@ -21,6 +21,10 @@ public class mainClass {
 	 * @param args
 	 * @throws IOException
 	 **********************************************************************************/
+		// THINGS TO ASK	
+		// - Always moving 2?
+		// - No moving nothing is allowed when amount is higher than K?
+	
 	public static void main(String[] args) throws IOException {		
 		ArrayList<Action> actions;
 		Field field = new Field("Setup.txt");
@@ -159,8 +163,13 @@ public class mainClass {
 	 * from the current position
 	 ******************************************************************************/
 	public static void moveSand(Field field, ArrayList<int[]> sandMovements) {
-		int [] distribution =  new int[5]; //[pos actual, norte, oeste, este sur]
-		distribution[0]=field.getNumber(field.getXt(), field.getYt());
+		int [] distribution =  new int[5]; //[pos actual, norte, oeste, este sur]7
+		////////////////////////////////Moving //////////////////////////////////////
+		int q = field.getNumber(field.getXt(), field.getYt());
+		if(q > field.getK()) distribution[0]=field.getNumber(field.getXt(), field.getYt()) - field.getK();
+		else distribution[0]=0;
+		/////////////////////////////////////////////////////////////////////
+		//distribution[0]=field.getNumber(field.getXt(), field.getYt());
 		loop(0, distribution, sandMovements, field);
 	}//End moveSand
 	
@@ -178,7 +187,10 @@ public class mainClass {
 		int[] auxDistribution;
 		int nextPos;
 		auxDistribution = distribution.clone();
-		solution.add(distribution.clone());
+		/////////////////////////////////////////////////
+			if(distribution[0]==0) solution.add(distribution.clone());
+		////////////////////////////////////////////////
+		//solution.add(distribution.clone());
 		if(position < distribution.length) {
 			nextPos = nextPosAvailable(position, distribution, field);
 			for(int j=distribution[position]; j>0; j--) {	
