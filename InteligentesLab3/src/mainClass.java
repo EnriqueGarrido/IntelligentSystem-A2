@@ -15,15 +15,14 @@ public class mainClass {
 	
 	/**********************************************************************************
 	 * Method name: main
-	 * Description: everuthing starts here. The succesor function is called. Also
+	 * Description: everything starts here. The successor function is called. Also
 	 * there is an example of a performed action where the action to be performed 
 	 * in the current state of the field is chosen randomly
 	 * @param args
 	 * @throws IOException
 	 **********************************************************************************/
-		// THINGS TO ASK	
-		// - Always moving 2?
-		// - No moving nothing is allowed when amount is higher than K?
+		// THINGS TO ASK
+		// - No moving nothing is allowed when amount is higher or equal than K?
 	
 	public static void main(String[] args) throws IOException {		
 		ArrayList<Action> actions;
@@ -35,10 +34,12 @@ public class mainClass {
 		System.out.println("Size column: " + field.getSizeC());
 		System.out.println("Size Row: " + field.getSizeR() + "\n-----MATRIX-----");
 		field.printMatrix();
-		actions=successor(field);
 		
-		//////////////////////////////////// EXAMPLE OF AN ACTION APPLIED ////////////////////////////////////////
-		System.out.println("\n--------PERMFORM AN ACTION (Example randomly chosen)------");
+		//Here we obtain all possible actions that can be performed//
+		actions=createActions(field);
+		
+		/////////////////////////////////// EXAMPLE OF AN ACTION APPLIED ////////////////////////////////////////
+		/*System.out.println("\n--------PERMFORM AN ACTION (Example randomly chosen)------");
 		Random rd = new Random(System.currentTimeMillis());
 		int chosen = rd.nextInt(actions.size());
 		actions.get(chosen).perform(field);
@@ -48,20 +49,54 @@ public class mainClass {
 		System.out.println(nextMov);
 		field.printMatrix();
 		String matrix=field.saveMatrix();
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		field.generateOutput(nextMov, matrix);
+		field.generateOutput(nextMov, matrix);*/
+		/////////////////////////////////////// EXAMPLE OF ALL SUCCESSORS //////////////////////////////////////	
+		ArrayList<Field> successors = successors(field, actions);
+		printSuccessors(successors);
 	}//End main
 	
 	/********************************************************************************
-	 * Method name: successor
-	 * Description: is in charge of all tasks related to the successors creation
+	 * Method name: successors
+	 * Description: takes a field and a set of actions and obtains all new fields
+	 * where the set of actions has been performed
+	 * @param parentField -> the parent field (state)
+	 * @param actions -> set of actions that can be performed in the field
+	 * @return a list with all successors states from the current one
+	 ********************************************************************************/
+	public static ArrayList<Field> successors(Field parentField, ArrayList<Action>actions) {
+		ArrayList<Field> successors = new ArrayList<Field>();
+		Iterator<Action> it = actions.iterator();
+		while(it.hasNext()) {
+			Action nextAction = it.next();
+			Field newField = new Field(parentField, nextAction);
+			successors.add(newField);
+		}
+		return successors;
+	}//End successsors
+	
+	public static void printSuccessors(ArrayList<Field> successors) {
+		Iterator<Field> it = successors.iterator();
+		int counter=0;
+		System.out.println("---------- Succesors ------------");
+		while(it.hasNext()) {
+			System.out.println("Successor number: "+ ++counter);
+			Field aux = it.next();
+			aux.printMatrix();
+			System.out.println("Tractor in ("+aux.getXt()+", "+aux.getYt()+")");
+			System.out.println("Is goal? " + isGoal(aux));
+			System.out.println();
+		}
+	}
+	
+	/********************************************************************************
+	 * Method name: createActions
+	 * Description: is in charge of all tasks related to the actions creation
 	 * obtaining the adjacent positions where the tractor can move and all the 
 	 * possible sand distributions and combine them all
 	 * @param field -> current state of the field and the tractor position
 	 * @return an ArrayList with all the possible actions
 	 ********************************************************************************/
-	private static ArrayList<Action> successor(Field field) {
+	private static ArrayList<Action> createActions(Field field) {
 		ArrayList <int[]> adjacentPositions, sandMovements;
 		ArrayList <Action> actions =  new ArrayList<Action>();
 		sandMovements= new ArrayList<int[]>();
@@ -168,8 +203,6 @@ public class mainClass {
 		int q = field.getNumber(field.getXt(), field.getYt());
 		if(q > field.getK()) distribution[0]=field.getNumber(field.getXt(), field.getYt()) - field.getK();
 		else distribution[0]=0;
-		/////////////////////////////////////////////////////////////////////
-		//distribution[0]=field.getNumber(field.getXt(), field.getYt());
 		loop(0, distribution, sandMovements, field);
 	}//End moveSand
 	
@@ -187,10 +220,7 @@ public class mainClass {
 		int[] auxDistribution;
 		int nextPos;
 		auxDistribution = distribution.clone();
-		/////////////////////////////////////////////////
 			if(distribution[0]==0) solution.add(distribution.clone());
-		////////////////////////////////////////////////
-		//solution.add(distribution.clone());
 		if(position < distribution.length) {
 			nextPos = nextPosAvailable(position, distribution, field);
 			for(int j=distribution[position]; j>0; j--) {	
@@ -292,5 +322,13 @@ public class mainClass {
 				positions[3]=false;
 			}
 	}//End checkPositions
+	
+	public static boolean isGoal(Field field) {
+		int [][] aux = field.getField();
+		for(int i =0; i< aux.length; i++)
+			for(int j =0; j < aux[0].length; j++)
+				if(aux[i][j] != field.getK()) return false;
+		return true;
+	}
 	
 }//End mainClass

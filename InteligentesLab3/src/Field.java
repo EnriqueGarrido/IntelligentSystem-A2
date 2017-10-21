@@ -17,15 +17,41 @@ public class Field {
 	private int sizec; //number of columns
 	private int sizer; //number of rows
 	
+	private int [][] goal; 
+	
 	/*************************************************************************************
 	 * Method name: Field
-	 * Description: Constructor class for the field
+	 * Description: Constructor class for the field from a file
 	 * @param path -> the place where the file is situated
 	 ************************************************************************************/
 	public Field(String path) {
 		this.path = path;
 		readField();
+		generateGoal();
 	}//End constructor
+	
+	/*************************************************************************************
+	 * Method name: Field
+	 * Description: Constructor class for the field from a current Field and an action
+	 * that is performed to create an additional state field
+	 * @param f -> parent field
+	 * @param action -> action to be performed
+	 ************************************************************************************/
+	public Field(Field f, Action action) {
+		this.xt = f.getXt();
+		this.yt = f.getYt();
+		this.k = f.getK();
+		this.max = f.getMax();
+		this.sizec = f.getSizeC();
+		this.sizer = f.getSizeR();
+		this.field = new int[sizer][sizec];
+		this.goal = f.getGoal();
+		for (int i = 0; i < this.field.length; i++) {
+			int[][] aux = f.getField();
+			this.field[i] = aux[i].clone();
+		}
+		action.perform(this);
+	}
 	
 	/*************************************************************************************
 	 * Method name: readField
@@ -61,6 +87,13 @@ public class Field {
 		}
 		
 	}//End readField
+	
+	public void generateGoal() {
+		goal = new int[sizer][sizec];
+		for(int i = 0; i< goal.length; i++)
+			for(int j =0; j<goal[i].length; j++)
+				goal[i][j] = k;
+	}//End generateGoal
 	
 	/*************************************************************************************
 	 * Method name: readFirstLine
@@ -303,6 +336,15 @@ public class Field {
 	public void setSizec(int size) {
 		this.sizec=size;
 	}//End setSizec
+
+	public int[][] getGoal() {
+		return goal;
+	}
+
+	public void setGoal(int[][] goal) {
+		this.goal = goal;
+	}
+	
 	
 }//End Field class
 

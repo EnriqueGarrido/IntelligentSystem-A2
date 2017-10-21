@@ -1,7 +1,7 @@
 public class Action {
 
-	private int xt, yt; //Position where the tractor is moved
-	private int[] sandMovement; //Vector which contains the quantities of sand moved in each action
+	private int xt, yt;			 //Position where the tractor is moved
+	private int[] sandMovement;  //Vector which contains the quantities of sand moved in each action
 	
 	/*************************************************************************************
 	 * Method name: Action
