@@ -1,5 +1,7 @@
+import java.util.*;
 
-public class Node {
+
+public class Node implements Comparable<Node>{
 	
 	private Node parent;
 	
@@ -9,25 +11,22 @@ public class Node {
 	private int depth;
 	private int value;
 	
-	public Node(Node parent, Field state, int cost, Action action, int depth, int value) {
-		this.parent = parent;
-		this.state = state;
-		this.cost = cost;
-		this.action = action;
-		this.depth = depth;
-		this.value = value;
-	}
 	
-
-	public Node(Field state, int cost, Action action, int depth, int value) {
-		this.state = state;
-		this.cost = cost;
-		this.action = action;
-		this.depth = depth;
-		this.value = value;
+	public Node(Node parentNode, Action nextAction) {
+		this.state =  new Field(parentNode.getState(), nextAction);
+		this.action = nextAction;
+		this.parent = parentNode;
+		////
+		this.cost = parentNode.getCost()+1;
+		this.depth = parentNode.getDepth()+1;
+		this.value = Math.abs(1+(new Random()).nextInt()%100);
 	}
 
+	public Node(Field state) {
+		this.state = state;
+	}
 
+	
 
 	public Node getParent() {
 		return parent;
@@ -77,7 +76,24 @@ public class Node {
 		this.value = value;
 	}
 	
+	@Override
+	public int compareTo(Node other) { 
+		if(this.getValue()<other.getValue()){
+			return -1;
+		}
+		if(this.getValue()>other.getValue()){
+			return 1;
+		}
+		return 0;
+	}
 	
-	
+	public String toString() {
+		/*return "Node:\n" + state.saveMatrix() + "("+ state.getXt() + ", " + state.getYt() + 
+				")\nCost: "+cost + "\nAction: " + action.toString() + "\nDepth: " + depth + 
+				"\nValue : "+value;*/
+		return "Node:\n" + state.saveMatrix() + "("+ state.getXt() + ", " + state.getYt() + 
+				")\nCost: "+cost + "\nDepth: " + depth + 
+				"\nValue : "+value;
+	}
 	
 }

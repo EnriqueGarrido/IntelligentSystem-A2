@@ -46,9 +46,15 @@ public class Field {
 		this.sizer = f.getSizeR();
 		this.field = new int[sizer][sizec];
 		this.goal = f.getGoal();
-		for (int i = 0; i < this.field.length; i++) {
+		/*for (int i = 0; i < this.field.length; i++) {
 			int[][] aux = f.getField();
 			this.field[i] = aux[i].clone();
+		}*/
+		int[][] aux = f.getField();
+		for(int i =0; i<this.field.length; i++) {
+			for(int j=0; j<this.field[1].length; j++) {
+				this.field[i][j] = aux[i][j];
+			}
 		}
 		action.perform(this);
 	}
@@ -217,6 +223,21 @@ public class Field {
 		br.write(matrix);
 		br.close();
 	}//End generateOutput
+	
+	public static boolean isGoal(Field field) {
+		int [][] aux = field.getField();
+		for(int i =0; i< aux.length; i++)
+			for(int j =0; j < aux[0].length; j++)
+				if(aux[i][j] != field.getK()) return false;
+		return true;
+	}
+	
+	public boolean compareField(Field parent) {
+		for(int i = 0; i < sizer; i++) 
+			for(int j = 0; j < sizec; j++) 
+				if(parent.getField()[i][j] != field[i][j]) return false;
+		return true;
+	}
 	
 	/*************************************************************************************
 	 * Method name: getField
