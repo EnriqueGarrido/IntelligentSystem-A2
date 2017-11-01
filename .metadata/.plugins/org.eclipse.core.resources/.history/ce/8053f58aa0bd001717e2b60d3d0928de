@@ -59,10 +59,10 @@ public class Field {
 		action.perform(this);
 	}
 	
-	/**************************************************************************************************
+	/*************************************************************************************
 	 * Method name: readField
 	 * Description: it will get file's contents. Then, in other methods we will analyze the information.
-	 ***************************************************************************************************/
+	 ************************************************************************************/
 	public void readField() {
 		File archivo = null;
 		FileReader fr = null;
@@ -93,10 +93,7 @@ public class Field {
 		}
 		
 	}//End readField
-	/************************************************************************************************************************
-	 * Method name: generateGoal
-	 * Description: It generates the matrix with all numbers sets to k
-	 **********************************************************************************************************************/
+	
 	public void generateGoal() {
 		goal = new int[sizer][sizec];
 		for(int i = 0; i< goal.length; i++)
@@ -226,12 +223,7 @@ public class Field {
 		br.write(matrix);
 		br.close();
 	}//End generateOutput
-	/********************************************************************************************
-	 * Method name: isGoal
-	 * Description: Compare both matrix to know if the matrix is goal or not
-	 * @param field -> one matrix to compare with the other
-	 * @return true -> if the field is goal it returns true
-	 *******************************************************************************************/
+	
 	public static boolean isGoal(Field field) {
 		int [][] aux = field.getField();
 		for(int i =0; i< aux.length; i++)
@@ -239,12 +231,7 @@ public class Field {
 				if(aux[i][j] != field.getK()) return false;
 		return true;
 	}
-	/*********************************************************************************************
-	 * Method name: compareField
-	 * Description: it compares the parent node with the other matrix to prove that the parent
-	 * @param parent -> The matrix that we have to prove that is the father
-	 * @return true -> if the matrix is the parent of the other child is true
-	 *********************************************************************************************/
+	
 	public boolean compareField(Field parent) {
 		for(int i = 0; i < sizer; i++) 
 			for(int j = 0; j < sizec; j++) 
@@ -370,17 +357,11 @@ public class Field {
 	public void setSizec(int size) {
 		this.sizec=size;
 	}//End setSizec
-    /*************************************************************************************
-     * Method name: getGoal
-     * Description: it gets the matrix goal
-     *************************************************************************************/
+
 	public int[][] getGoal() {
 		return goal;
 	}
-	/*************************************************************************************
-     * Method name: setGoal
-     * Description: it sets the matrix of goal to change that
-     *************************************************************************************/
+
 	public void setGoal(int[][] goal) {
 		this.goal = goal;
 	}

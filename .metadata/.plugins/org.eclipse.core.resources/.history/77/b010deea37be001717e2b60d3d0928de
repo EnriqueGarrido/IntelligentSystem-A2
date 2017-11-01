@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.*;
 //import java.io.*;
 
@@ -7,8 +6,6 @@ public class Successor {
 	
 	static boolean [] positions= new boolean[4]; //Array to key if there is possible to move to a direction [N, W, E, S]
 	
-	//////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////
 	/*public static void createNodes(Field f) {
 		nodes(new Node(f), 0, 0, 0);
 	}

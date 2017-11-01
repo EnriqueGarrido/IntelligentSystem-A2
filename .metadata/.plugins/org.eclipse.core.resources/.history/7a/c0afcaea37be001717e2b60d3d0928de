@@ -52,8 +52,8 @@ public class Main {
 		ArrayList<Field> successors = successors(field, actions);
 		printSuccessors(successors);
 	}//End main
-
-*/	
+*/
+	
 	public static void main(String[] args) {
 		Node firstNode;
 		Field field = new Field("Setup.txt");
