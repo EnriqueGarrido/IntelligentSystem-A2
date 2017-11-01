@@ -77,8 +77,8 @@ public class Main {
 		Collections.sort(frontier.getFrontier());
 		listTF = System.nanoTime() - listTI;										//-------------------------------------
 		for(int i = 0; i< suc.size(); i++) {
-			System.out.println("----");
-			System.out.println(frontier.getFrontier().get(i));
+			//System.out.println("----");
+			//System.out.println(frontier.getFrontier().get(i));
 		}
 		////////////////////////////////////////// QUEUE //////////////////////////////
 		System.out.println("---------------------- QUEUE -----------------");
@@ -96,7 +96,6 @@ public class Main {
 			System.out.println(frontier2.getFrontierQ().poll());
 		}
 		///////////////////////////////////// TIme comparison /////////////////////////
-		System.out.println("----------- TIME -----------");
 		System.out.print("Time of list: ");
 		System.out.print(listTF);
 		System.out.print("ms\nTIme of queue: ");

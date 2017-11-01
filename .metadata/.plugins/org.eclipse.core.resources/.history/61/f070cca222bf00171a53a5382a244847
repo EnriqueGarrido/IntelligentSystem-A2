@@ -96,7 +96,6 @@ public class Main {
 			System.out.println(frontier2.getFrontierQ().poll());
 		}
 		///////////////////////////////////// TIme comparison /////////////////////////
-		System.out.println("----------- TIME -----------");
 		System.out.print("Time of list: ");
 		System.out.print(listTF);
 		System.out.print("ms\nTIme of queue: ");

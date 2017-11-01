@@ -65,24 +65,20 @@ public class Main {
 
 		long listTI, listTF, queueTI, queueTF;										//-------------------------------------
 		////////////////////////////////////////// LINKED LIST /////////////////////////
-		System.out.println("--------------------- LIST ------------------");
-		System.out.println("------- Parent -----\n" + suc.get(0).getParent());
 		listTI = System.nanoTime();													//-------------------------------------
 		for(int i = 0; i< suc.size(); i++) {
-			//System.out.println("------- Parent -----\n" + suc.get(i).getParent());
-			//System.out.println("---- Sucesores ----");
-			//System.out.println(suc.get(i)+"\n---");
+			System.out.println("------- Parent -----\n" + suc.get(i).getParent());
+			System.out.println("---- Sucesores ----");
+			System.out.println(suc.get(i)+"\n---");
 			frontier.insertNode(suc.get(i));
 		}
 		Collections.sort(frontier.getFrontier());
 		listTF = System.nanoTime() - listTI;										//-------------------------------------
 		for(int i = 0; i< suc.size(); i++) {
-			System.out.println("----");
-			System.out.println(frontier.getFrontier().get(i));
+			//System.out.println("----");
+			//System.out.println(frontier.getFrontier().get(i));
 		}
 		////////////////////////////////////////// QUEUE //////////////////////////////
-		System.out.println("---------------------- QUEUE -----------------");
-		System.out.println("------- Parent -----\n" + suc.get(0).getParent());
 		queueTI = System.nanoTime();												//-------------------------------------
 		Frontier frontier2 = new Frontier();
 		frontier2.createFrontierQ();
@@ -96,7 +92,6 @@ public class Main {
 			System.out.println(frontier2.getFrontierQ().poll());
 		}
 		///////////////////////////////////// TIme comparison /////////////////////////
-		System.out.println("----------- TIME -----------");
 		System.out.print("Time of list: ");
 		System.out.print(listTF);
 		System.out.print("ms\nTIme of queue: ");
