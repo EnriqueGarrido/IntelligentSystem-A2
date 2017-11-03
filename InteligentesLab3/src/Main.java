@@ -95,11 +95,11 @@ public class Main {
 			System.out.println("----");
 			System.out.println(frontier2.getFrontierQ().poll());
 		}
-		///////////////////////////////////// TIme comparison /////////////////////////
+		///////////////////////////////////// Time comparison /////////////////////////
 		System.out.println("----------- TIME -----------");
 		System.out.print("Time of list: ");
 		System.out.print(listTF);
-		System.out.print("ms\nTIme of queue: ");
+		System.out.print("ms\nTime of queue: ");
 		System.out.print(queueTF);
 		System.out.println("ms\nBetter? "+ (listTF<queueTF ? "LinkedList":"Priority Queue"));
 	}
@@ -107,9 +107,10 @@ public class Main {
 	/*public static void main(String[] args) {
 		LinkedList<Node> lista = new LinkedList<Node>();
 		PriorityQueue<Node> queue = new PriorityQueue<Node>();
+		LinkedList<Node> lList = new LinkedList<Node>();
 		Field f = new Field("Setup.txt");
-		for (int i =0; i<36000000; i++) {
-			queue.add(new Node(f));
+		for (int i =0; i<25000000; i++) {
+			lList.add(new Node(f));
 			
 		}
 		System.out.println("Done");

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;practica.Estados&apos; to &apos;Estado&apos;&#x0D;&#x0A;- Original project: &apos;InteAlvarito&apos;&#x0D;&#x0A;- Original element: &apos;practica.Estados&apos;&#x0D;&#x0A;- Renamed element: &apos;practica.Estado&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Estados&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;practica{Estados.java[Estados" matchStrategy="1" name="Estado" qualified="false" references="true" similarDeclarations="false" stamp="1507477975267" textual="false" version="1.0"/>
-</session>
