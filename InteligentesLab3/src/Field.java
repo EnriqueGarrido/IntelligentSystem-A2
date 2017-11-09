@@ -17,7 +17,7 @@ public class Field {
 	private int sizec; //number of columns
 	private int sizer; //number of rows
 	
-	private int [][] goal; 
+	
 	
 	/*************************************************************************************
 	 * Method name: Field
@@ -27,7 +27,7 @@ public class Field {
 	public Field(String path) {
 		this.path = path;
 		readField();
-		generateGoal();
+		checkAmount();
 	}//End constructor
 	
 	/*************************************************************************************
@@ -45,11 +45,7 @@ public class Field {
 		this.sizec = f.getSizeC();
 		this.sizer = f.getSizeR();
 		this.field = new int[sizer][sizec];
-		this.goal = f.getGoal();
-		/*for (int i = 0; i < this.field.length; i++) {
-			int[][] aux = f.getField();
-			this.field[i] = aux[i].clone();
-		}*/
+
 		int[][] aux = f.getField();
 		for(int i =0; i<this.field.length; i++) {
 			for(int j=0; j<this.field[1].length; j++) {
@@ -57,6 +53,10 @@ public class Field {
 			}
 		}
 		action.perform(this);
+	}
+	//Constructor para el goal
+	public Field(Field f) {
+		generateGoal(f);
 	}
 	
 	/**************************************************************************************************
@@ -97,11 +97,11 @@ public class Field {
 	 * Method name: generateGoal
 	 * Description: It generates the matrix with all numbers sets to k
 	 **********************************************************************************************************************/
-	public void generateGoal() {
-		goal = new int[sizer][sizec];
-		for(int i = 0; i< goal.length; i++)
-			for(int j =0; j<goal[i].length; j++)
-				goal[i][j] = k;
+	public void generateGoal(Field f) {
+		field = new int[f.getSizeR()][f.getSizeC()];
+		for(int i = 0; i< field.length; i++)
+			for(int j =0; j<field[i].length; j++)
+				field[i][j] = f.getK();
 	}//End generateGoal
 	
 	/*************************************************************************************
@@ -232,11 +232,11 @@ public class Field {
 	 * @param field -> one matrix to compare with the other
 	 * @return true -> if the field is goal it returns true
 	 *******************************************************************************************/
-	public static boolean isGoal(Field field) {
-		int [][] aux = field.getField();
-		for(int i =0; i< aux.length; i++)
-			for(int j =0; j < aux[0].length; j++)
-				if(aux[i][j] != field.getK()) return false;
+	public boolean isGoal() {
+		//int [][] aux = f.getField();
+		for(int i =0; i< field.length; i++)
+			for(int j =0; j < field[0].length; j++)
+				if(this.field[i][j] != k) return false;
 		return true;
 	}
 	/*********************************************************************************************
@@ -252,6 +252,21 @@ public class Field {
 		return true;
 	}
 	
+	/*********************************************************************************************
+	 * 
+	 *********************************************************************************************/
+	public void checkAmount(){
+		double amount = 0;
+		double tocheck = 0f;
+		for(int i  = 0; i< field.length; i++) 
+			for(int j = 0; j < field[0].length; j++) 
+				amount += field[i][j];
+		tocheck = (double)amount/((double)sizer*(double)sizec);
+		if(tocheck != k) {
+			System.out.println("There is no possible solution as total sand amount cannot be uniformly distributed");
+			System.exit(0);
+		}
+	}
 	/*************************************************************************************
 	 * Method name: getField
 	 * Description: it gets the field
@@ -370,21 +385,6 @@ public class Field {
 	public void setSizec(int size) {
 		this.sizec=size;
 	}//End setSizec
-    /*************************************************************************************
-     * Method name: getGoal
-     * Description: it gets the matrix goal
-     *************************************************************************************/
-	public int[][] getGoal() {
-		return goal;
-	}
-	/*************************************************************************************
-     * Method name: setGoal
-     * Description: it sets the matrix of goal to change that
-     *************************************************************************************/
-	public void setGoal(int[][] goal) {
-		this.goal = goal;
-	}
-	
 	
 }//End Field class
 

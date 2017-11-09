@@ -22,9 +22,10 @@ public class Node implements Comparable<Node>{
 		this.action = nextAction;
 		this.parent = parentNode;
 		////
-		this.cost = parentNode.getCost()+1;
+		this.cost = parentNode.getCost()+action.getActionCost();
 		this.depth = parentNode.getDepth()+1;
-		this.value = Math.abs(1+(new Random()).nextInt()%100);
+		//this.value = Math.abs(1+(new Random()).nextInt()%100);
+		this.value = cost + depth;
 	}
 	/************************************************************************************************************
 	 * Method name: Node

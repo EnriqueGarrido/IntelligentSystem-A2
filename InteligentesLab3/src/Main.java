@@ -54,7 +54,7 @@ public class Main {
 	}//End main
 
 */	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Node firstNode;
 		Field field = new Field("Setup.txt");
 		Frontier frontier = new Frontier();
@@ -102,7 +102,7 @@ public class Main {
 		System.out.print("ms\nTime of queue: ");
 		System.out.print(queueTF);
 		System.out.println("ms\nBetter? "+ (listTF<queueTF ? "LinkedList":"Priority Queue"));
-	}
+	}*/
 	
 	/*public static void main(String[] args) {
 		LinkedList<Node> lista = new LinkedList<Node>();
@@ -115,5 +115,72 @@ public class Main {
 		}
 		System.out.println("Done");
 	}*/
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static void main(String[] args) {
+		Problem prob = new Problem("Setup.txt");
+		ArrayList<Node> sol = search(prob, 0, 20, 1);
+		for(int i = 0; i<sol.size(); i++) {
+			//System.out.println(i+1 + "- "+sol.get(sol.size()-i-1).getAction());
+			System.out.print(i+1 + "- \n");
+			System.out.println(sol.get(sol.size()-i-1).getState().saveMatrix());
+		}
+	}
+	/*
+	 * Busqueda (Prob,estrategia,Prof_Max,Inc_Prof): Solución o Nada.
+  		Prof_Actual<-Inc_Prof
+  		Solución<- Ninguna
+  		Mientras (not Solución) and (Prof_Act=< Prof_Max):
+    	Solución= Busqueda_Acotada(Prob,estrategia,Prof_Actual)
+     	Prof_Actual <- Prof_Actual + Inc_Prof
+  		Fin_Mientras
+  		devolver Solución
+	 */
+	
+	
+	public static ArrayList<Node> search(Problem prob, int strategy, int prof_max, int inc_prof) {
+		int currentProf = inc_prof;
+		ArrayList<Node> solution = new ArrayList<Node>();
+		while (currentProf <= prof_max){
+			solution = boundedSearch(prob, 0, 0);
+			currentProf = prof_max + inc_prof;
+		}
+		return solution;
+	}
 
+	public static ArrayList<Node> boundedSearch(Problem prob,int strategy,int currentProf){
+		  //Proceso de inicialización
+		Frontier frontier = new Frontier();
+		Node initial_node=new Node(prob.getInitState());
+		Node current_node = null;
+		frontier.createFrontier();
+		frontier.insertNode(initial_node);
+		boolean isSolution = false;
+		//Bucle de búsqueda
+		while(!isSolution && !frontier.isEmpty()){
+		   current_node=frontier.removeFirst(); ///Seleccion de nodo
+		   if(current_node.getState().isGoal()){
+			   isSolution = true;
+		   }else {
+			   Successor successors =  new Successor();
+			   ArrayList<Node> suc = successors.successors(current_node);
+			   for(int i = 0; i < suc.size(); i++) {
+				   frontier.insertNode(suc.get(i));
+			   }
+		   }
+		}
+		  //Resultado 
+		if(isSolution)
+		   return createSolution(current_node);
+		else return null;
+	}// End boundedSearch
+	
+	private static ArrayList<Node> createSolution(Node current_node) {
+		ArrayList<Node> solution = new ArrayList<Node>();
+		while(current_node.getParent()!=null) {
+			solution.add(current_node);
+			current_node = current_node.getParent();
+		}
+		return solution;
+	}
 }

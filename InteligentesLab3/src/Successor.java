@@ -36,8 +36,6 @@ public class Successor {
 	 * @return a list with all successors states from the current one
 	 ********************************************************************************/
 	public ArrayList<Node> successors(Node parentNode) {
-		//ArrayList<Node> successors = new ArrayList<Node>();
-		//recursive(parentNode, successors, 0, 0, 0);
 		ArrayList<Action> actions = createActions(parentNode.getState());
 		ArrayList<Node> successors = new ArrayList<Node>();
 		Iterator<Action> it = actions.iterator();
@@ -48,35 +46,6 @@ public class Successor {
 		}
 		return successors;
 	}//End successsors
-	
-	
-	/*private static void recursive(Node pNode, ArrayList<Node> s, int cost, int depth, int value) {
-		ArrayList<Action> actions = createActions(pNode.getState());
-		Iterator<Action> it = actions.iterator();
-		while(it.hasNext()) {
-			Action nextAction = it.next();
-			Node n = new Node(pNode, nextAction);
-			n.setCost(cost);
-			n.setDepth(depth);
-			n.setValue(value);
-			s.add(n);
-			recursive(n, s, cost+1, depth+1, value);
-		}
-	}*/
-	
-	/*public static void printSuccessors(ArrayList<Field> successors) {
-		Iterator<Field> it = successors.iterator();
-		int counter=0;
-		System.out.println("---------- Succesors ------------");
-		while(it.hasNext()) {
-			System.out.println("Successor number: "+ ++counter);
-			Field aux = it.next();
-			aux.printMatrix();
-			System.out.println("Tractor in ("+aux.getXt()+", "+aux.getYt()+")");
-			System.out.println("Is goal? " + isGoal(aux));
-			System.out.println();
-		}
-	}*/
 	
 	/********************************************************************************
 	 * Method name: createActions

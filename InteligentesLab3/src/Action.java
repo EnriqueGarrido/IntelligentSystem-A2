@@ -54,4 +54,11 @@ public class Action {
 		field.setYt(yt);
 	}//End perform
 	
+	public int getActionCost() {
+		int cost = 0;
+		for(int i = 0; i<sandMovement.length; i++)
+			cost+=sandMovement[i];
+		return cost;
+	}
+	
 }//End class
