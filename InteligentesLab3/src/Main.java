@@ -121,10 +121,15 @@ public class Main {
 		Problem prob = new Problem("Setup.txt");
 		ArrayList<Node> sol = search(prob, 0, 20, 1);
 		for(int i = 0; i<sol.size(); i++) {
-			//System.out.println(i+1 + "- "+sol.get(sol.size()-i-1).getAction());
+			System.out.println(i+1 + "- "+sol.get(sol.size()-i-1).getAction());
 			System.out.print(i+1 + "- \n");
-			System.out.println(sol.get(sol.size()-i-1).getState().saveMatrix());
+			System.out.print(sol.get(sol.size()-i-1).getState().saveMatrix());
+			System.out.println(sol.get(sol.size()-i-1).getAction());
 		}
+		/*PriorityQueue<Node> q= new PriorityQueue<Node>();
+		for(;;) {
+			q.add(new Node(new Field(prob.getInitState())));
+		}*/
 	}
 	/*
 	 * Busqueda (Prob,estrategia,Prof_Max,Inc_Prof): Solución o Nada.
