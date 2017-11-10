@@ -61,11 +61,9 @@ public class Successor {
 		sandMovements= new ArrayList<int[]>();
 		checkPositions(field);
 		adjacentPositions=moveTractor(field);
-		//printAdjacent(adjacentPositions, field);
 		moveSand(field, sandMovements);
 		removeMax(sandMovements, field);
 		createActions(adjacentPositions, sandMovements, actions);
-		//printActions(actions);
 		return actions;
 	}//End successor
 	

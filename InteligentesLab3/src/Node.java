@@ -21,10 +21,8 @@ public class Node implements Comparable<Node>{
 		this.state =  new Field(parentNode.getState(), nextAction);
 		this.action = nextAction;
 		this.parent = parentNode;
-		////
 		this.cost = parentNode.getCost()+action.getActionCost()+1;
 		this.depth = parentNode.getDepth()+1;
-		//this.value = Math.abs(1+(new Random()).nextInt()%100);
 		if(strategy == Strategy.BFS)
 			this.value = depth;
 		else if(strategy == Strategy.DFS || strategy == Strategy.DLS || strategy == Strategy.IDS)

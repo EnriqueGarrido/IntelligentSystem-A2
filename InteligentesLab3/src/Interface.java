@@ -5,7 +5,12 @@ public class Interface {
 
 	static Scanner sc= new Scanner(System.in);
 	static UninformedSearch uSearch= new UninformedSearch();
-	public static void main(String[] args) throws FileNotFoundException {
+	
+	public static void main(String[] args) throws IOException {
+		String path= "Output.txt";
+		File file=new File(path);
+		BufferedWriter br;
+		br= new BufferedWriter(new FileWriter(file));
 		String inputFile;
 		System.out.println("Input File: ");
 		inputFile= sc.next();
@@ -21,11 +26,21 @@ public class Interface {
 		ArrayList<Node> list=uSearch.search(prob, str, max, incr);
 		for(int i = 0; i<list.size(); i++) {
 			System.out.println(i+1 + "- "+list.get(list.size()-i-1).getAction());
-			System.out.print(i+1 + "- \n");
+			br.write(i+1 + "- "+list.get(list.size()-i-1).getAction());
+			//br.newLine();
+			System.out.print("\n");
+			br.write("\n");
 			System.out.print(list.get(list.size()-i-1).getState().saveMatrix());
-			System.out.println(list.get(list.size()-i-1).getAction());
+			br.write(list.get(list.size()-i-1).getState().saveMatrix());
+			//br.newLine();
+			//System.out.println(list.get(list.size()-i-1).getAction());
+			//br.write(""+list.get(list.size()-i-1).getAction());
+			br.newLine();
+			br.newLine();
 		}
+		br.close();
 	}
+	
 	
 	public static Strategy menu() {
 		boolean select=true;
@@ -70,5 +85,15 @@ public class Interface {
 			value=sc.nextInt();
 		}
 		return value;
+	}
+	public void generateOutput(String nextMov, String matrix) throws IOException {
+		String path= "Output.txt";
+		File file=new File(path);
+		BufferedWriter br;
+		br= new BufferedWriter(new FileWriter(file));
+		br.write(nextMov);
+		br.newLine();
+		br.write(matrix);
+		br.close();
 	}
 }

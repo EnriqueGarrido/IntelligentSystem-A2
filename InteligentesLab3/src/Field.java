@@ -209,23 +209,6 @@ public class Field {
 		return matrix;
 	}//End saveMatrix
 	
-	/**************************************************************************************
-	 * Method name: generateOutput
-	 * Description: it puts in a file the new state of the tractor and the field
-	 * @param nextMov -> new state of the tractor
-	 * @param matrix -> it is the current state of the field with the sand
-	 * @throws IOException
-	 *************************************************************************************/
-	public void generateOutput(String nextMov, String matrix) throws IOException {
-		String path= "Output.txt";
-		File file=new File(path);
-		BufferedWriter br;
-		br= new BufferedWriter(new FileWriter(file));
-		br.write(nextMov);
-		br.newLine();
-		br.write(matrix);
-		br.close();
-	}//End generateOutput
 	/********************************************************************************************
 	 * Method name: isGoal
 	 * Description: Compare both matrix to know if the matrix is goal or not
