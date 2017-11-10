@@ -1,4 +1,4 @@
-import java.util.*;
+
 
 
 public class Node implements Comparable<Node>{
@@ -17,15 +17,20 @@ public class Node implements Comparable<Node>{
 	 * @param parentNode -> a node that is the parent of the other node 
 	 * @param nextAction -> the action that to the node will be applicated
 	 **********************************************************************************************************/
-	public Node(Node parentNode, Action nextAction) {
+	public Node(Node parentNode, Action nextAction, Strategy strategy) {
 		this.state =  new Field(parentNode.getState(), nextAction);
 		this.action = nextAction;
 		this.parent = parentNode;
 		////
-		this.cost = parentNode.getCost()+action.getActionCost();
+		this.cost = parentNode.getCost()+action.getActionCost()+1;
 		this.depth = parentNode.getDepth()+1;
 		//this.value = Math.abs(1+(new Random()).nextInt()%100);
-		this.value = cost + depth;
+		if(strategy == Strategy.BFS)
+			this.value = depth;
+		else if(strategy == Strategy.DFS || strategy == Strategy.DLS || strategy == Strategy.IDS)
+			this.value = -depth;
+		else if(strategy == Strategy.UCS)
+			this.value = cost;
 	}
 	/************************************************************************************************************
 	 * Method name: Node

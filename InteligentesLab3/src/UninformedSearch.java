@@ -9,7 +9,7 @@ import java.io.*;
  * Subject: Intelligent Systems
  * Group: A2
  **********************************************************************************************************/
-public class Main {
+public class UninformedSearch {
 
 	/**********************************************************************************
 	 * Method name: main
@@ -117,6 +117,7 @@ public class Main {
 	}*/
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
 	public static void main(String[] args) {
 		Problem prob = new Problem("Setup.txt");
 		ArrayList<Node> sol = search(prob, 0, 20, 1);
@@ -130,7 +131,8 @@ public class Main {
 		for(;;) {
 			q.add(new Node(new Field(prob.getInitState())));
 		}*/
-	}
+	
+		
 	/*
 	 * Busqueda (Prob,estrategia,Prof_Max,Inc_Prof): Solución o Nada.
   		Prof_Actual<-Inc_Prof
@@ -143,17 +145,17 @@ public class Main {
 	 */
 	
 	
-	public static ArrayList<Node> search(Problem prob, int strategy, int prof_max, int inc_prof) {
+	public ArrayList<Node> search(Problem prob, Strategy strategy, int prof_max, int inc_prof) {
 		int currentProf = inc_prof;
 		ArrayList<Node> solution = new ArrayList<Node>();
 		while (currentProf <= prof_max){
-			solution = boundedSearch(prob, 0, 0);
+			solution = boundedSearch(prob, strategy, 0);
 			currentProf = prof_max + inc_prof;
 		}
 		return solution;
 	}
 
-	public static ArrayList<Node> boundedSearch(Problem prob,int strategy,int currentProf){
+	public static ArrayList<Node> boundedSearch(Problem prob,Strategy strategy,int currentProf){
 		  //Proceso de inicialización
 		Frontier frontier = new Frontier();
 		Node initial_node=new Node(prob.getInitState());
@@ -168,7 +170,7 @@ public class Main {
 			   isSolution = true;
 		   }else {
 			   Successor successors =  new Successor();
-			   ArrayList<Node> suc = successors.successors(current_node);
+			   ArrayList<Node> suc = successors.successors(current_node, strategy);
 			   for(int i = 0; i < suc.size(); i++) {
 				   frontier.insertNode(suc.get(i));
 			   }
