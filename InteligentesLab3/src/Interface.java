@@ -5,7 +5,14 @@ public class Interface {
 
 	static Scanner sc= new Scanner(System.in);
 	static UninformedSearch uSearch= new UninformedSearch();
-	
+	/***********************************************************************************************************
+	 * Class name: Main
+	 * Description: in this class all computations of the executions of the problem are performed, including
+	 * the main method with an example of a performed action on the field
+	 * @author Adrian Ollero Jimenez, Enrique Garrido Pozo, Pablo Mora Herreros 
+	 * Subject: Intelligent Systems
+	 * Group: A2
+	 **********************************************************************************************************/
 	public static void main(String[] args) throws IOException {
 		String path= "Output.txt";
 		File file=new File(path);
@@ -27,21 +34,20 @@ public class Interface {
 		for(int i = 0; i<list.size(); i++) {
 			System.out.println(i+1 + "- "+list.get(list.size()-i-1).getAction());
 			br.write(i+1 + "- "+list.get(list.size()-i-1).getAction());
-			//br.newLine();
 			System.out.print("\n");
 			br.write("\n");
 			System.out.print(list.get(list.size()-i-1).getState().saveMatrix());
 			br.write(list.get(list.size()-i-1).getState().saveMatrix());
-			//br.newLine();
-			//System.out.println(list.get(list.size()-i-1).getAction());
-			//br.write(""+list.get(list.size()-i-1).getAction());
 			br.newLine();
 			br.newLine();
 		}
 		br.close();
 	}
-	
-	
+	/**************************************************************************************
+	 * Class name: menu
+	 * Description: This is a menu that we use to choose the strategy that we will use.
+	 * @return str -> It returns the strategy that we will use to aplicate later
+	 **************************************************************************************/
 	public static Strategy menu() {
 		boolean select=true;
 		int opt;
@@ -76,6 +82,13 @@ public class Interface {
 		}
 		return str;
 	}
+	/*********************************************************************************
+	 * Method: obtainValue
+	 * Description: This is method to check that the number that we are going to 
+	 * introduce is not a negative number
+	 * @param cadena -> The program we will ask to us about what the program wants
+	 * @return value -> The value that we want
+	 ********************************************************************************/
 	public static int obtainValue(String cadena) {
 		System.out.println(cadena);
 		int value=sc.nextInt();
@@ -85,15 +98,5 @@ public class Interface {
 			value=sc.nextInt();
 		}
 		return value;
-	}
-	public void generateOutput(String nextMov, String matrix) throws IOException {
-		String path= "Output.txt";
-		File file=new File(path);
-		BufferedWriter br;
-		br= new BufferedWriter(new FileWriter(file));
-		br.write(nextMov);
-		br.newLine();
-		br.write(matrix);
-		br.close();
 	}
 }

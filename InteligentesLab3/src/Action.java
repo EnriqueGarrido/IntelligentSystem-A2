@@ -6,7 +6,7 @@ public class Action {
 	/*************************************************************************************
 	 * Method name: Action
 	 * Description: Constructor class for the actions
-	 * @param coor -> the coordinates the tractor will move
+	 * @param coor -> the coordinates the tractor will move, 
 	 * @param sand -> the quantities of sand moved
 	 ************************************************************************************/
 	public Action(int[] coor, int[] sand) {
@@ -54,6 +54,11 @@ public class Action {
 		field.setYt(yt);
 	}//End perform
 	
+	/****************************************************************************************
+	 * Method name: getActionCost
+	 * Description: This method is used to know the cost of the node
+	 * @return cost -> the cost of the node
+	 ****************************************************************************************/
 	public int getActionCost() {
 		int cost = 0;
 		for(int i = 0; i<sandMovement.length; i++)

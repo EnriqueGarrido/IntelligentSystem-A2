@@ -1,16 +1,17 @@
 import java.util.*;
 import java.io.*;
 
-/***********************************************************************************************************
- * Class name: Main
- * Description: in this class all computations of the executions of the problem are performed, including
- * the main method with an example of a performed action on the field
- * @author Adrian Ollero Jimenez, Enrique Garrido Pozo, Pablo Mora Herreros 
- * Subject: Intelligent Systems
- * Group: A2
- **********************************************************************************************************/
 public class UninformedSearch {
 	
+	/**************************************************************************************
+	 * Method name: search
+	 * Description: Is in charge of find a solution
+	 * @param prob -> Is the problem that we have to solve 
+	 * @param strategy -> The strategy that we will use
+	 * @param prof_max -> The breath that we estimate
+	 * @param inc_prof -> The increment doing this strategy
+	 * @return solution -> We return the solution that the problem finds
+	 *************************************************************************************/
 	public ArrayList<Node> search(Problem prob, Strategy strategy, int prof_max, int inc_prof) {
 		int currentProf = inc_prof;
 		ArrayList<Node> solution = new ArrayList<Node>();
@@ -20,7 +21,14 @@ public class UninformedSearch {
 		}
 		return solution;
 	}
-
+	/**************************************************************************************
+	 * Method name: boundedSearch
+	 * Description: 
+	 * @param prob -> The problem that we have to solve
+	 * @param strategy -> The strategy that we have to use
+	 * @param currentProf -> The breadth that we determine
+	 * @return null or solution that we have to determine
+	 ***************************************************************************************/
 	public static ArrayList<Node> boundedSearch(Problem prob,Strategy strategy,int currentProf){
 		//Proceso de inicialización
 		Frontier frontier = new Frontier();
@@ -47,7 +55,11 @@ public class UninformedSearch {
 		   return createSolution(current_node);
 		else return null;
 	}// End boundedSearch
-	
+	/*************************************************************************************
+	 * Method name: createSolution
+	 * @param current_node -> the actual node in which we are.
+	 * @return solution -> the solution that we have found
+	 *************************************************************************************/
 	private static ArrayList<Node> createSolution(Node current_node) {
 		ArrayList<Node> solution = new ArrayList<Node>();
 		while(current_node.getParent()!=null && solution!= null) {
