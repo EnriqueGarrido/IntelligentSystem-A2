@@ -29,6 +29,8 @@ public class Node implements Comparable<Node>{
 			this.value = -depth;
 		else if(strategy == Strategy.UCS)
 			this.value = cost;
+		else if(strategy == Strategy.A_START)
+			this.value = cost + state.h();
 	}
 	/************************************************************************************************************
 	 * Method name: Node

@@ -34,7 +34,7 @@ public class Interface {
 		for(int i = 0; i<list.size(); i++) {
 			System.out.println(i+1 + "- "+list.get(list.size()-i-1).getAction());
 			br.write(i+1 + "- "+list.get(list.size()-i-1).getAction());
-			System.out.print("\n");
+			//System.out.print("\n");
 			br.write("\n");
 			System.out.print(list.get(list.size()-i-1).getState().saveMatrix());
 			br.write(list.get(list.size()-i-1).getState().saveMatrix());
@@ -53,7 +53,7 @@ public class Interface {
 		int opt;
 		Strategy str=null;
 		while(select==true) {
-			System.out.println("Choose a strategy: \n1-BFS \n2-DFS \n3-DLS \n4-IDS \n5-UCS");
+			System.out.println("Choose a strategy: \n1-BFS \n2-DFS \n3-DLS \n4-IDS \n5-UCS \n6-A*");
 			opt=sc.nextInt();
 			switch(opt) {
 			case 1:
@@ -75,6 +75,10 @@ public class Interface {
 			case 5:
 				str= Strategy.UCS;
 				select=false;
+				break;
+			case 6:
+				str = Strategy.A_START;
+				select = false;
 				break;
 			default: 
 				System.out.println("Error. Write a number between 1-5");

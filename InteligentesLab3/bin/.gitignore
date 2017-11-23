@@ -1,10 +1,9 @@
 /Action.class
 /Field.class
 /Frontier.class
-/Main.class
+/Interface.class
 /Node.class
 /Problem.class
-/Successor.class
-/Interface.class
-/UninformedSearch.class
 /Strategy.class
+/Successor.class
+/UninformedSearch.class

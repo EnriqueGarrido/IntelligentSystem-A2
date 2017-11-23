@@ -250,6 +250,14 @@ public class Field {
 			System.exit(0);
 		}
 	}
+	
+	public int h() {
+		int h=0;
+		for(int i=0; i<field.length; i++)
+			for(int j=0; j<field[i].length; j++)
+				if(field[i][j]!=k) h++;
+		return h;
+	}
 	/*************************************************************************************
 	 * Method name: getField
 	 * Description: it gets the field

@@ -16,8 +16,8 @@ public class UninformedSearch {
 		int currentProf = inc_prof;
 		ArrayList<Node> solution = new ArrayList<Node>();
 		while (currentProf <= prof_max){
-			solution = boundedSearch(prob, strategy, 0);
-			currentProf = prof_max + inc_prof;
+			solution = boundedSearch(prob, strategy, currentProf);
+			currentProf = currentProf + inc_prof;
 		}
 		return solution;
 	}
