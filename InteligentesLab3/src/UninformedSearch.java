@@ -3,6 +3,10 @@ import java.io.*;
 
 public class UninformedSearch {
 	
+	public static Hashtable<String, Integer> visited = new Hashtable<String, Integer>();
+	static boolean optimization = false;
+	
+	
 	/**************************************************************************************
 	 * Method name: search
 	 * Description: Is in charge of find a solution
@@ -46,7 +50,17 @@ public class UninformedSearch {
 			   Successor successors =  new Successor();
 			   ArrayList<Node> suc = successors.successors(current_node, strategy);
 			   for(int i = 0; i < suc.size(); i++) {
-				   frontier.insertNode(suc.get(i));
+				   // If optimization
+				   if(optimization == true) { 
+					   if(checkVisited(suc.get(i))) frontier.insertNode(suc.get(i));
+				   /////////////////////////////
+				   
+				   /////////////////////////////
+				// If not optimization
+				   }else {
+					   frontier.insertNode(suc.get(i));
+				   }
+				   
 			   }
 		   }
 		}
@@ -67,5 +81,12 @@ public class UninformedSearch {
 			current_node = current_node.getParent();
 		}
 		return solution;
+	}
+	
+	private static boolean checkVisited(Node node) {
+		String serial = node.serialize();
+		//if(visited.e)
+		visited.put(serial, node.getValue());
+		return false;
 	}
 }

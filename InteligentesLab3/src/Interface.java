@@ -5,6 +5,7 @@ public class Interface {
 
 	static Scanner sc= new Scanner(System.in);
 	static UninformedSearch uSearch= new UninformedSearch();
+	
 	/***********************************************************************************************************
 	 * Class name: Main
 	 * Description: in this class all computations of the executions of the problem are performed, including
@@ -30,6 +31,7 @@ public class Interface {
 		}else {
 			incr=1;
 		}
+		askOptimization();
 		ArrayList<Node> list=uSearch.search(prob, str, max, incr);
 		for(int i = 0; i<list.size(); i++) {
 			System.out.println(i+1 + "- "+list.get(list.size()-i-1).getAction());
@@ -102,5 +104,20 @@ public class Interface {
 			value=sc.nextInt();
 		}
 		return value;
+	}
+	
+	public static void askOptimization() {
+		boolean ask = true;
+		while(ask) {
+			System.out.print("Optimization? Y/N");
+			switch(sc.next()) {
+				case "Y": case "YES": case "yes": case "y": case "Yes":
+					uSearch.optimization = true; ask = false; break;
+				case "N": case "NO": case "no": case "n": case "No":
+					uSearch.optimization = false; ask = false; break;
+				default: System.out.println("No correct ");
+			}
+		}
+		
 	}
 }

@@ -164,4 +164,14 @@ public class Node implements Comparable<Node>{
 				"\nValue : "+value;
 	}
 	
+	public String serialize() {
+		String serialized="@";
+		int[][] s = state.getField();
+		for(int i=0; i<s.length; i++)
+			for(int j=0; j<s[i].length; j++)
+				serialized+=s[i][j];
+		serialized+="@"+state.getXt()+state.getYt();
+		return serialized;
+	}
+	
 }
