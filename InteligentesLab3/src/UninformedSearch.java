@@ -53,9 +53,6 @@ public class UninformedSearch {
 				   // If optimization
 				   if(optimization == true) { 
 					   if(checkVisited(suc.get(i))) frontier.insertNode(suc.get(i));
-				   /////////////////////////////
-				   
-				   /////////////////////////////
 				// If not optimization
 				   }else {
 					   frontier.insertNode(suc.get(i));
