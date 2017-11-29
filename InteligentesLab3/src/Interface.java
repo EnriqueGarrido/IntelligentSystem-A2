@@ -39,6 +39,8 @@ public class Interface {
 			timeF = System.currentTimeMillis();
 			System.out.println("Time: " + (timeF-timeI) + "ms");
 			if(list!=null) {
+				br.write("Strategy: "+str.toString());
+				br.newLine();
 				br.write("n-\t(X, Y)[N, W, E, S]");
 				br.newLine();
 				for(int i = 0; i<list.size(); i++) {
@@ -104,7 +106,7 @@ public class Interface {
 				select=false;
 				break;
 			case 6:
-				str = Strategy.A_START;
+				str = Strategy.A_STAR;
 				select = false;
 				break;
 			default: 
