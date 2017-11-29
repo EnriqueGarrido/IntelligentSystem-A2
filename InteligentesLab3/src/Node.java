@@ -174,5 +174,11 @@ public class Node implements Comparable<Node>{
 		return serialized;
 	}
 	
+	public int getValueHash(Strategy strategy) {
+		if(strategy == Strategy.DFS || strategy == Strategy.DLS || strategy == Strategy.IDS)
+			return cost;
+		else
+			return value;
+	}
 	
 }

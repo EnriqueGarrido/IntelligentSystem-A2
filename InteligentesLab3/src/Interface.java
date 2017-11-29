@@ -24,7 +24,7 @@ public class Interface {
 		System.out.println("Input File: ");
 		inputFile= sc.next();
 		Problem prob = new Problem(inputFile);
-		while(true) {
+		//while(true) {
 			Strategy str=menu();
 			int max= obtainValue("Max depth: ");
 			int incr;
@@ -57,14 +57,18 @@ public class Interface {
 				br.newLine();
 				br.write("Time: "+ (timeF-timeI) + "ms");
 				br.newLine();
+				br.write("Depth: "+list.get(0).getDepth());
+				br.newLine();
 				br.write("Spatial Complexity: " + uSearch.nNodes() + " nodes generated");
+				br.newLine();
+				br.write("Optimization: "+ (uSearch.getOptimization()? "Yes":"No"));
 				br.newLine();
 			}else {
 				System.out.println("No solution could be found. Check max depth");
 				br.write("No solution could be found. Check max depth");
 			}
 			br.close();
-		}
+		//}
 	}
 	/**************************************************************************************
 	 * Class name: menu

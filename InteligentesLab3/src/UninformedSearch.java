@@ -84,23 +84,16 @@ public class UninformedSearch {
 	
 	private static boolean checkVisited(Node node, Strategy strategy) {
 		String serial = node.serialize();
-		if(!visited.contains(serial)) {
-			addVisitedNode(serial, node, strategy);
+		if(!visited.containsKey(serial)) {
+			visited.put(serial, node.getValueHash(strategy));
 			return true;
 		}else {
-			if(visited.get(serial) > node.getValue()) { /****/
+			if(visited.get(serial) > node.getValueHash(strategy)) { /****/
 				visited.remove(serial);
-				addVisitedNode(serial, node, strategy);
+				visited.put(serial, node.getValueHash(strategy));
 				return true;
 			}else {/*No nothing*/ nNodes--; return false;}
 		}
-	}
-	
-	private static void addVisitedNode(String serial, Node node, Strategy strategy) {
-		if(strategy == Strategy.DFS || strategy == Strategy.DLS || strategy == Strategy.IDS)
-			visited.put(serial, node.getCost());
-		else
-			visited.put(serial, node.getValue());
 	}
 	
 	public long nNodes() {
