@@ -35,11 +35,11 @@ public class Successor {
 	 * @param actions -> set of actions that can be performed in the field
 	 * @return a list with all successors states from the current one
 	 ********************************************************************************/
-	public ArrayList<Node> successors(Node parentNode, Strategy strategy) {
+	public ArrayList<Node> successors(Node parentNode, Strategy strategy, int prof) {
 		ArrayList<Action> actions = createActions(parentNode.getState());
 		ArrayList<Node> successors = new ArrayList<Node>();
 		Iterator<Action> it = actions.iterator();
-		while(it.hasNext()) {			//Obtains the inmediate successors
+		while(it.hasNext() && prof>parentNode.getDepth()) {			//Obtains the inmediate successors
 			Action nextAction = it.next();
 			Node newNode = new Node(parentNode, nextAction, strategy);
 				successors.add(newNode);

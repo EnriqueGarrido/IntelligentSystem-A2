@@ -5,6 +5,7 @@ public class UninformedSearch {
 	
 	public static Hashtable<String, Integer> visited = new Hashtable<String, Integer>();
 	static boolean optimization = false;
+	static long nNodes = 0;
 	
 	
 	/**************************************************************************************
@@ -18,10 +19,11 @@ public class UninformedSearch {
 	 *************************************************************************************/
 	public ArrayList<Node> search(Problem prob, Strategy strategy, int prof_max, int inc_prof) {
 		int currentProf = inc_prof;
-		ArrayList<Node> solution = new ArrayList<Node>();
-		while (currentProf <= prof_max){
+		ArrayList<Node> solution = null;
+		while (solution == null && currentProf <= prof_max){
 			solution = boundedSearch(prob, strategy, currentProf);
 			currentProf = currentProf + inc_prof;
+			visited.clear();
 		}
 		return solution;
 	}
@@ -48,16 +50,15 @@ public class UninformedSearch {
 			   isSolution = true;
 		   }else {
 			   Successor successors =  new Successor();
-			   ArrayList<Node> suc = successors.successors(current_node, strategy);
+			   ArrayList<Node> suc = successors.successors(current_node, strategy, currentProf);
 			   for(int i = 0; i < suc.size(); i++) {
 				   // If optimization
 				   if(optimization == true) { 
-					   if(checkVisited(suc.get(i))) frontier.insertNode(suc.get(i));
+					   if(checkVisited(suc.get(i), strategy)) frontier.insertNode(suc.get(i));
 				// If not optimization
 				   }else {
 					   frontier.insertNode(suc.get(i));
 				   }
-				   
 			   }
 		   }
 		}
@@ -80,10 +81,35 @@ public class UninformedSearch {
 		return solution;
 	}
 	
-	private static boolean checkVisited(Node node) {
+	private static boolean checkVisited(Node node, Strategy strategy) {
 		String serial = node.serialize();
-		//if(visited.e)
-		visited.put(serial, node.getValue());
-		return false;
+		if(!visited.contains(serial)) {
+			addVisitedNode(serial, node, strategy);
+			return true;
+		}else {
+			if(visited.get(serial) > node.getValue()) { /****/
+				visited.remove(serial);
+				addVisitedNode(serial, node, strategy);
+				return true;
+			}else {/*No nothing*/ nNodes--; return false;}
+		}
+	}
+	
+	private static void addVisitedNode(String serial, Node node, Strategy strategy) {
+		if(strategy == Strategy.DFS || strategy == Strategy.DLS || strategy == Strategy.IDS)
+			visited.put(serial, node.getCost());
+		else
+			visited.put(serial, node.getValue());
+	}
+	
+	public long nNodes() {
+		return nNodes;
+	}
+	
+	public boolean getOptimization() {
+		return optimization;
+	}
+	public void setOptimization(boolean opt) {
+		optimization = opt;
 	}
 }

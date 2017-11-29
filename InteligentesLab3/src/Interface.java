@@ -15,6 +15,7 @@ public class Interface {
 	 * Group: A2
 	 **********************************************************************************************************/
 	public static void main(String[] args) throws IOException {
+		double timeF, timeI;
 		String path= "Output.txt";
 		File file=new File(path);
 		BufferedWriter br;
@@ -29,10 +30,13 @@ public class Interface {
 		if (str==Strategy.IDS) {
 			incr= obtainValue("Increment: ");
 		}else {
-			incr=1;
+			incr=max;
 		}
 		askOptimization();
+		timeI = System.currentTimeMillis();
 		ArrayList<Node> list=uSearch.search(prob, str, max, incr);
+		timeF = System.currentTimeMillis();
+		System.out.println("Time: " + (timeF-timeI) + "ms");
 		for(int i = 0; i<list.size(); i++) {
 			System.out.println(i+1 + "- "+list.get(list.size()-i-1).getAction());
 			br.write(i+1 + "- "+list.get(list.size()-i-1).getAction());
@@ -112,9 +116,9 @@ public class Interface {
 			System.out.print("Optimization? Y/N");
 			switch(sc.next()) {
 				case "Y": case "YES": case "yes": case "y": case "Yes":
-					uSearch.optimization = true; ask = false; break;
+					uSearch.setOptimization(true); ask = false; break;
 				case "N": case "NO": case "no": case "n": case "No":
-					uSearch.optimization = false; ask = false; break;
+					uSearch.setOptimization(false); ask = false; break;
 				default: System.out.println("No correct ");
 			}
 		}
