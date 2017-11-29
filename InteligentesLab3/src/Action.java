@@ -66,4 +66,9 @@ public class Action {
 		return cost;
 	}
 	
+	public String getActionRepresentation() {
+		return "("+xt+", "+yt+")["+sandMovement[1]+", "+sandMovement[2]+
+				", "+sandMovement[3]+", "+sandMovement[4]+"]";
+	}
+	
 }//End class

@@ -24,30 +24,47 @@ public class Interface {
 		System.out.println("Input File: ");
 		inputFile= sc.next();
 		Problem prob = new Problem(inputFile);
-		Strategy str=menu();
-		int max= obtainValue("Max depth: ");
-		int incr;
-		if (str==Strategy.IDS) {
-			incr= obtainValue("Increment: ");
-		}else {
-			incr=max;
+		while(true) {
+			Strategy str=menu();
+			int max= obtainValue("Max depth: ");
+			int incr;
+			if (str==Strategy.IDS) {
+				incr= obtainValue("Increment: ");
+			}else {
+				incr=max;
+			}
+			askOptimization();
+			timeI = System.currentTimeMillis();
+			ArrayList<Node> list=uSearch.search(prob, str, max, incr);
+			timeF = System.currentTimeMillis();
+			System.out.println("Time: " + (timeF-timeI) + "ms");
+			if(list!=null) {
+				br.write("n-\t(X, Y)[N, W, E, S]");
+				br.newLine();
+				for(int i = 0; i<list.size(); i++) {
+					System.out.println(i+1 + "- "+list.get(list.size()-i-1).getAction());
+					br.write(i+1 + "-\t"+list.get(list.size()-i-1).getAction().getActionRepresentation());
+					br.newLine();
+					//br.write(i+1 + "- "+list.get(list.size()-i-1).getAction());
+					//System.out.print("\n");
+					//br.write("\n");
+					System.out.print(list.get(list.size()-i-1).getState().saveMatrix());
+					//br.write(list.get(list.size()-i-1).getState().saveMatrix());
+					//br.newLine();
+					//br.newLine();
+				}
+				br.write("Cost: " + list.get(0).getCost());
+				br.newLine();
+				br.write("Time: "+ (timeF-timeI) + "ms");
+				br.newLine();
+				br.write("Spatial Complexity: " + uSearch.nNodes() + " nodes generated");
+				br.newLine();
+			}else {
+				System.out.println("No solution could be found. Check max depth");
+				br.write("No solution could be found. Check max depth");
+			}
+			br.close();
 		}
-		askOptimization();
-		timeI = System.currentTimeMillis();
-		ArrayList<Node> list=uSearch.search(prob, str, max, incr);
-		timeF = System.currentTimeMillis();
-		System.out.println("Time: " + (timeF-timeI) + "ms");
-		for(int i = 0; i<list.size(); i++) {
-			System.out.println(i+1 + "- "+list.get(list.size()-i-1).getAction());
-			br.write(i+1 + "- "+list.get(list.size()-i-1).getAction());
-			//System.out.print("\n");
-			br.write("\n");
-			System.out.print(list.get(list.size()-i-1).getState().saveMatrix());
-			br.write(list.get(list.size()-i-1).getState().saveMatrix());
-			br.newLine();
-			br.newLine();
-		}
-		br.close();
 	}
 	/**************************************************************************************
 	 * Class name: menu
@@ -113,7 +130,7 @@ public class Interface {
 	public static void askOptimization() {
 		boolean ask = true;
 		while(ask) {
-			System.out.print("Optimization? Y/N");
+			System.out.print("Optimization? (Y/N) ");
 			switch(sc.next()) {
 				case "Y": case "YES": case "yes": case "y": case "Yes":
 					uSearch.setOptimization(true); ask = false; break;

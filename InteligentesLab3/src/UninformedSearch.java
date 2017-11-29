@@ -60,6 +60,7 @@ public class UninformedSearch {
 					   frontier.insertNode(suc.get(i));
 				   }
 			   }
+			   nNodes+=suc.size();
 		   }
 		}
 		  //Resultado 
