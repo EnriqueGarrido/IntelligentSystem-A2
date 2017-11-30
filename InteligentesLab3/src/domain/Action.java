@@ -1,3 +1,4 @@
+package domain;
 public class Action {
 
 	private int xt, yt;			 //Position where the tractor is moved
