@@ -25,7 +25,10 @@ import javax.swing.border.BevelBorder;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -50,6 +53,9 @@ public class GraphicInterface {
 	private UninformedSearch uSearch = new UninformedSearch();
 	private Problem prob;
 	private Strategy strategy;
+	private int maxDepth, increment;
+	private long timeI, timeF;
+	private ArrayList<Node> solList;
 	
 	/*******************************************/
 	/**
@@ -414,7 +420,55 @@ public class GraphicInterface {
 		 }
 	 }
 	 public void algorithm() {
-		 
+		 maxDepth = Integer.parseInt(txtMaxDepth.getText());
+		 if(strategy == Strategy.IDS) increment = Integer.parseInt(txtIncrement.getText());
+		 else increment = maxDepth;
+		 timeI = System.currentTimeMillis();
+		 	solList = uSearch.search(prob, strategy, maxDepth, increment);
+		 timeF = System.currentTimeMillis();
+		 try {
+			writeFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	 }
+	 
+	 public void writeFile() throws IOException {
+		 BufferedWriter br;
+		 File file = new File("OutputGraphic.txt");
+			br= new BufferedWriter(new FileWriter(file));
+			if(solList!=null) {
+				br.write("Strategy: "+strategy.toString());
+				br.newLine();
+				br.write("n-\t(X, Y)[N, W, E, S]");
+				br.newLine();
+				for(int i = 0; i<solList.size(); i++) {
+					System.out.println(i+1 + "- "+solList.get(solList.size()-i-1).getAction());
+					br.write(i+1 + "-\t"+solList.get(solList.size()-i-1).getAction().getActionRepresentation());
+					br.newLine();
+					//br.write(i+1 + "- "+list.get(list.size()-i-1).getAction());
+					//System.out.print("\n");
+					//br.write("\n");
+					System.out.print(solList.get(solList.size()-i-1).getState().saveMatrix());
+					//br.write(list.get(list.size()-i-1).getState().saveMatrix());
+					//br.newLine();
+					//br.newLine();
+				}
+				br.write("Cost: " + solList.get(0).getCost());
+				br.newLine();
+				br.write("Time: "+ (timeF-timeI) + "ms");
+				br.newLine();
+				br.write("Depth: "+solList.get(0).getDepth());
+				br.newLine();
+				br.write("Spatial Complexity: " + uSearch.nNodes() + " nodes generated");
+				br.newLine();
+				br.write("Optimization: "+ (uSearch.getOptimization()? "Yes":"No"));
+				br.newLine();
+			}else {
+				System.out.println("No solution could be found. Check max depth");
+				br.write("No solution could be found. Check max depth");
+			}
+			br.close();
 	 }
 }
 
