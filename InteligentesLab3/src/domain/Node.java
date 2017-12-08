@@ -22,7 +22,7 @@ public class Node implements Comparable<Node>{
 		this.state =  new Field(parentNode.getState(), nextAction);
 		this.action = nextAction;
 		this.parent = parentNode;
-		this.cost = parentNode.getCost()+action.getActionCost()+1;
+		this.cost = parentNode.getCost()+action.getActionCost();
 		this.depth = parentNode.getDepth()+1;
 		if(strategy == Strategy.BFS)
 			this.value = depth;
@@ -176,7 +176,7 @@ public class Node implements Comparable<Node>{
 	}
 	
 	public int getValueHash(Strategy strategy) {
-		if(strategy == Strategy.DFS || strategy == Strategy.DLS || strategy == Strategy.IDS)
+		if(strategy == Strategy.BFS || strategy == Strategy.DFS || strategy == Strategy.DLS || strategy == Strategy.IDS)
 			return cost;
 		else
 			return value;

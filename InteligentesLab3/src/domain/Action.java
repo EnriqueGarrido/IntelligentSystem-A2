@@ -64,7 +64,7 @@ public class Action {
 		int cost = 0;
 		for(int i = 0; i<sandMovement.length; i++)
 			cost+=sandMovement[i];
-		return cost;
+		return cost+1;
 	}
 	
 	public String getActionRepresentation() {

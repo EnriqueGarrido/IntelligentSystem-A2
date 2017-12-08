@@ -13,6 +13,7 @@ import javax.swing.JCheckBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class PanelSolution extends JPanel {
 
@@ -21,6 +22,10 @@ public class PanelSolution extends JPanel {
 	 */
 	public PanelSolution() {
 		setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblHola = new JLabel("Hola");
+		lblHola.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblHola, BorderLayout.CENTER);
 
 	}
 

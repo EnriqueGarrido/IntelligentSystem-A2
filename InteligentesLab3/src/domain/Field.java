@@ -202,8 +202,12 @@ public class Field {
 	public String saveMatrix() {
 		String matrix="";
 		for(int j=0;j<sizer;j++){
+			matrix = matrix + "\t";
 			for(int k=0;k<sizec;k++){
-				matrix= matrix +field[j][k]+ " ";
+				if(j == xt && k == yt)
+					matrix= matrix +"|"+field[j][k]+ "|\t";
+				else
+					matrix= matrix +" "+field[j][k]+ "\t";
 			}
 			matrix=matrix + "\n";
 		}
