@@ -20,6 +20,7 @@ public class UninformedSearch {
 	 *************************************************************************************/
 	public ArrayList<Node> search(Problem prob, Strategy strategy, int prof_max, int inc_prof) {
 		int currentProf = inc_prof;
+		nNodes = 0;
 		ArrayList<Node> solution = null;
 		while (solution == null && currentProf <= prof_max){
 			solution = boundedSearch(prob, strategy, currentProf);

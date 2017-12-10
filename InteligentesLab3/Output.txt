@@ -40,7 +40,7 @@ n-	(X, Y)[N, W, E, S]
 	|1|	 1	 1	
 Cost: 20
 Value: 8
-Time: 69.0ms
+Time: 102.0ms
 Depth: 8
 Spatial Complexity: 6393 nodes generated
 Optimization: Yes

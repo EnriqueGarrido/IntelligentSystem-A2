@@ -38,6 +38,10 @@ import javax.swing.JTable;
 import javax.swing.JEditorPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
+import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
+import javax.swing.JTextArea;
 
 public class GraphicInterface {
 
@@ -53,7 +57,7 @@ public class GraphicInterface {
 	JCheckBox chbOptimization = new JCheckBox("");
 	JComboBox cbOutput = new JComboBox();
 	JButton btnReset = new JButton("Reset");
-	JPanel pnlField = new JPanel();
+	JTextArea txtSolutionFields = new JTextArea();
 	JCheckBox chbShowImageIn = new JCheckBox("Show Image In File");
 
 	/*******************************************/
@@ -65,6 +69,7 @@ public class GraphicInterface {
 	private long timeI, timeF;
 	private ArrayList<Node> solList;
 	private String outputpath = "";
+	private String solText = "";
 	//private int show = 0;
 
 	/*******************************************/
@@ -96,14 +101,13 @@ public class GraphicInterface {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setResizable(false);
 		frame.setBounds(100, 100, 653, 495);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 262, 0, 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 436, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
 		frame.getContentPane().setLayout(gridBagLayout);
 
 		JPanel pnlSettings = new JPanel();
@@ -323,50 +327,29 @@ public class GraphicInterface {
 		frame.getContentPane().add(separator, gbc_separator);
 
 		JPanel pnlResult = new JPanel();
-		pnlResult.setLayout(null);
 		GridBagConstraints gbc_pnlResult = new GridBagConstraints();
 		gbc_pnlResult.insets = new Insets(0, 0, 5, 0);
 		gbc_pnlResult.fill = GridBagConstraints.BOTH;
 		gbc_pnlResult.gridx = 2;
 		gbc_pnlResult.gridy = 0;
 		frame.getContentPane().add(pnlResult, gbc_pnlResult);
-
-		pnlField.setBounds(0, 0, 344, 320);
-		pnlResult.add(pnlField);
-		GridBagLayout gbl_pnlField = new GridBagLayout();
-		gbl_pnlField.columnWidths = new int[] { 0, 0, 0, 0 };
-		gbl_pnlField.rowHeights = new int[] { 0, 0, 0, 0, 0 };
-		gbl_pnlField.columnWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
-		gbl_pnlField.rowWeights = new double[] { 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		pnlField.setLayout(gbl_pnlField);
-
-		JLabel lblCheckFileTo = new JLabel("Check file to see the solution for the moment");
-		lblCheckFileTo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCheckFileTo.setEnabled(false);
-		GridBagConstraints gbc_lblCheckFileTo = new GridBagConstraints();
-		gbc_lblCheckFileTo.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCheckFileTo.gridx = 1;
-		gbc_lblCheckFileTo.gridy = 1;
-		pnlField.add(lblCheckFileTo, gbc_lblCheckFileTo);
-
-		JLabel lblThisFeatureWill = new JLabel("This feature will added in the future");
-		lblThisFeatureWill.setHorizontalAlignment(SwingConstants.CENTER);
-		lblThisFeatureWill.setEnabled(false);
-		GridBagConstraints gbc_lblThisFeatureWill = new GridBagConstraints();
-		gbc_lblThisFeatureWill.insets = new Insets(0, 0, 5, 5);
-		gbc_lblThisFeatureWill.gridx = 1;
-		gbc_lblThisFeatureWill.gridy = 2;
-		pnlField.add(lblThisFeatureWill, gbc_lblThisFeatureWill);
-
-		JButton btnLeft = new JButton("<-");
-		btnLeft.setEnabled(false);
-		btnLeft.setBounds(105, 356, 51, 31);
-		pnlResult.add(btnLeft);
-
-		JButton btnRight = new JButton("->");
-		btnRight.setEnabled(false);
-		btnRight.setBounds(187, 356, 51, 31);
-		pnlResult.add(btnRight);
+		GridBagLayout gbl_pnlResult = new GridBagLayout();
+		gbl_pnlResult.columnWidths = new int[]{125, 0};
+		gbl_pnlResult.rowHeights = new int[]{48, 0};
+		gbl_pnlResult.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_pnlResult.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		pnlResult.setLayout(gbl_pnlResult);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 0;
+		pnlResult.add(scrollPane, gbc_scrollPane);
+		
+		txtSolutionFields.setOpaque(false);
+		txtSolutionFields.setEditable(false);
+		scrollPane.setViewportView(txtSolutionFields);
 		/**********************************************/
 		cbStrategy.setEnabled(false);
 		txtMaxDepth.setEnabled(false);
@@ -386,6 +369,7 @@ public class GraphicInterface {
 				txtOutputPath.setText("");
 				cbStrategy.setSelectedIndex(0);
 				chbShowImageIn.setSelected(false);
+				txtSolutionFields.setText("");
 			}
 		});
 		btnReset.setEnabled(false);
@@ -494,6 +478,7 @@ public class GraphicInterface {
 		else
 			increment = maxDepth;
 		uSearch.setOptimization(chbOptimization.isSelected());
+		solText = "";
 		timeI = System.currentTimeMillis();
 		solList = uSearch.search(prob, strategy, maxDepth, increment);
 		timeF = System.currentTimeMillis();
@@ -524,8 +509,6 @@ public class GraphicInterface {
 					aux.add(lbl);
 				}
 			}
-			pnlField = aux;
-			pnlField.updateUI();
 		} // End while
 	}
 
@@ -537,6 +520,7 @@ public class GraphicInterface {
 		info += "Depth: " + solList.get(0).getDepth() + " ";
 		info += "Spatial Complexity: " + uSearch.nNodes() + " nodes";
 		lblInfor.setText(info);
+		txtSolutionFields.setText(solText);
 	}
 
 	public void writeFile() throws IOException {
@@ -547,15 +531,19 @@ public class GraphicInterface {
 			br.write("Strategy: " + strategy.toString());
 			br.newLine();
 			br.write("Initial State:\n"+prob.getInitState().saveMatrix()+"\n");
+			solText += "Initial State:\n"+prob.getInitState().saveMatrix()+"\n";
 			br.write("n-\t(X, Y)[N, W, E, S]\n");
+			solText += "Initial State:\n"+prob.getInitState().saveMatrix()+"\n\n";
 			br.newLine();
 			for (int i = 0; i < solList.size(); i++) {
 				// System.out.println(i + 1 + "- " + solList.get(solList.size() - i -
 				// 1).getAction());
+				solText += i + 1 + "-\t" + solList.get(solList.size() - i - 1).getAction().getActionRepresentation()+"\n";
 				br.write(i + 1 + "-\t" + solList.get(solList.size() - i - 1).getAction().getActionRepresentation());
 				br.newLine();
 				// System.out.print(solList.get(solList.size() - i -
 				// 1).getState().saveMatrix());
+				solText += solList.get(solList.size() - i - 1).getState().saveMatrix()+"\n\n";
 				if (chbShowImageIn.isSelected())
 					br.write(solList.get(solList.size() - i - 1).getState().saveMatrix()+"\n");
 			}
